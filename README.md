@@ -7,3 +7,21 @@ Side scrolling shooter - klasyczna strzelanka gdzie lecimy statkiem/innym obiekt
 ## Technologię
 
 Python + PySDL2
+
+## Instalacja
+
+### Wymagania
+
+1. [pip](https://pip.pypa.io/en/latest/installing.html)
+2. [SDL](https://www.libsdl.org/)
+
+Dla systemów Linux można użyć komand:
+
+    [sudo] apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+
+### Wymagane moduły Pythona
+
+Dla instalacji modułów, użyć `pip`:
+
+    pip install pysdl2
+
