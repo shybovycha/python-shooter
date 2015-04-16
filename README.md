@@ -6,14 +6,14 @@ Side scrolling shooter - klasyczna strzelanka gdzie lecimy statkiem/innym obiekt
 
 ## Technologię
 
-Python + PySDL2
+Python + Cocos2d
 
 ## Instalacja
 
 ### Wymagania
 
 1. [pip](https://pip.pypa.io/en/latest/installing.html)
-2. [SDL](https://www.libsdl.org/)
+2. [cocos2d](https://github.com/los-cocos/cocos)
 
 Dla systemów Linux można użyć komand:
 
@@ -23,5 +23,5 @@ Dla systemów Linux można użyć komand:
 
 Dla instalacji modułów, użyć `pip`:
 
-    pip install pysdl2
+    pip install cocos2d
 
