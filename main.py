@@ -6,6 +6,7 @@ class Player(object):
         self.window_size = cocos.director.director.get_window_size()
         self.parent_layer = parent_layer
         self.sprite = cocos.sprite.Sprite('resources/ships/spaceship1_final.png')
+        self.sprite.rotation = 90
         self.parent_layer.add(self.sprite)
 
     def move_to(self, x, y):
@@ -23,11 +24,14 @@ class PlayerLayer(cocos.layer.ScrollableLayer):
         self.scene = scene
         self.player = Player(self)
 
+    def _step(self, dt):
+        self.scene.shift_background()
+
     def on_mouse_motion(self, x, y, dx, dy):
         self.player.move_to(x, y)
 
-        scroll_speed = 3.0
-        self.scene.background.y -= scroll_speed * 0.3
+        # self.scene.background.x -= delta
+        # self.scene.secondary_background.x -= delta
         # self.scene.background.origin_x -= dx
         # self.scene.scroll_mgr.set_focus(x, y)
 
@@ -44,16 +48,36 @@ class MainScene(cocos.scene.Scene):
         self.load_map()
         self.load_players()
 
+    def shift_background(self):
+        scroll_speed = 7.0
+        delta = scroll_speed * 0.3
+        padding_zone = scroll_speed * 5
+
+        self.bg_img1.x -= delta
+        self.bg_img2.x -= delta
+
+        win_width, win_height = cocos.director.director.get_window_size()
+
+        if self.bg_img1.x < -self.bg_img1.width + win_width + padding_zone:
+            self.bg_img2.x = self.bg_img1.x + self.bg_img1.width
+
+            tmp = self.bg_img1
+            self.bg_img1 = self.bg_img2
+            self.bg_img2 = tmp
+
     def load_map(self):
         # self.background = cocos.layer.ScrollableLayer()
         self.background = cocos.layer.Layer()
 
-        image = cocos.sprite.Sprite('resources/backgrounds/space1.png', anchor = (0, 0))
+        self.bg_img1 = cocos.sprite.Sprite('resources/backgrounds/space1.png', anchor = (0, 0))
+        self.bg_img2 = cocos.sprite.Sprite('resources/backgrounds/space1.png', anchor = (0, 0))
+        self.bg_img2.x = self.bg_img1.width
 
-        self.background.add(image)
-        self.background.parallax = 0
-        self.background.x = 0 #-image.width / 2
-        self.background.y = 0 #image.height
+        self.background.add(self.bg_img1)
+        self.background.add(self.bg_img2)
+        # self.background.parallax = 0
+        self.background.x = 0
+        self.background.y = 0
 
         self.add(self.background)
 
