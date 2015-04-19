@@ -1,56 +1,71 @@
 import cocos
 from cocos.actions import *
 
-class Player(object):
-    def __init__(self, parent_layer):
+class CollidableSprite(object):
+    def __init__(self, image, x = 0, y = 0):
+        self.sprite = cocos.sprite.Sprite(image)
         self.window_size = cocos.director.director.get_window_size()
-        self.parent_layer = parent_layer
-        self.sprite = cocos.sprite.Sprite('resources/ships/spaceship1_final.png')
-        self.sprite.rotation = 90
-        self.parent_layer.add(self.sprite)
+        self.radius = max(self.sprite.width, self.sprite.height)
+        self.sprite.position = x, y
 
-    def move_to(self, x, y):
+    def _distance(self, p1, p2):
+        x1, y1 = p1
+        x2, y2 = p2
+        return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
+
+    def check_collision(self, other):
+        d = self._distance(self.x, self.y, other.x, other.y)
+        r1, r2 = self.radius, other.radius
+
+        if (d <= r1 + r2):
+            return True
+        else:
+            return False
+
+    def get_position(self):
+        return self.sprite.position
+
+    def set_position(self, x, y):
         x = min(max(x, self.sprite.width / 2), self.window_size[0] - self.sprite.width / 2)
         y = min(max(y, self.sprite.height / 2), self.window_size[1] - self.sprite.height / 2)
 
         self.sprite.position = x, y
 
-class PlayerLayer(cocos.layer.ScrollableLayer):
+class Player(CollidableSprite):
+    def __init__(self):
+        super(Player, self).__init__('resources/ships/spaceship1_final.png')
+        self.sprite.rotation = 90
+
+class PlayerLayer(cocos.layer.Layer):
     is_event_handler = True
 
-    def __init__(self, scene):
+    def __init__(self):
         super(PlayerLayer, self).__init__()
 
-        self.scene = scene
-        self.player = Player(self)
-
-    def _step(self, dt):
-        self.scene.shift_background()
+        self.player = Player()
+        self.add(self.player.sprite)
 
     def on_mouse_motion(self, x, y, dx, dy):
-        self.player.move_to(x, y)
+        self.player.set_position(x, y)
 
-        # self.scene.background.x -= delta
-        # self.scene.secondary_background.x -= delta
-        # self.scene.background.origin_x -= dx
-        # self.scene.scroll_mgr.set_focus(x, y)
+class BackgroundLayer(cocos.layer.Layer):
+    is_event_handler = True
 
-class MainScene(cocos.scene.Scene):
     def __init__(self):
-        super(MainScene, self).__init__()
+        super(BackgroundLayer, self).__init__()
 
-        # self.scroll_mgr = cocos.layer.ScrollingManager()
-        # self.add(self.scroll_mgr)
+        self.bg_img1 = cocos.sprite.Sprite('resources/backgrounds/space1.png', anchor = (0, 0))
+        self.bg_img2 = cocos.sprite.Sprite('resources/backgrounds/space1.png', anchor = (0, 0))
+        self.bg_img2.x = self.bg_img1.width
 
-    def on_enter(self):
-        super(MainScene, self).on_enter()
+        self.add(self.bg_img1)
+        self.add(self.bg_img2)
+        self.x = 0
+        self.y = 0
 
-        self.load_map()
-        self.load_players()
-
-    def shift_background(self):
-        scroll_speed = 7.0
-        delta = scroll_speed * 0.3
+    def shift_background(self, dt = 1.0):
+        scroll_speed = 6.0
+        delta = scroll_speed * 0.3 * int(dt * 100)
         padding_zone = scroll_speed * 5
 
         self.bg_img1.x -= delta
@@ -65,29 +80,26 @@ class MainScene(cocos.scene.Scene):
             self.bg_img1 = self.bg_img2
             self.bg_img2 = tmp
 
+    def _step(self, dt):
+        self.shift_background(dt)
+
+class MainScene(cocos.scene.Scene):
+    def __init__(self):
+        super(MainScene, self).__init__()
+
+    def on_enter(self):
+        super(MainScene, self).on_enter()
+
+        self.load_map()
+        self.load_players()
+
     def load_map(self):
-        # self.background = cocos.layer.ScrollableLayer()
-        self.background = cocos.layer.Layer()
-
-        self.bg_img1 = cocos.sprite.Sprite('resources/backgrounds/space1.png', anchor = (0, 0))
-        self.bg_img2 = cocos.sprite.Sprite('resources/backgrounds/space1.png', anchor = (0, 0))
-        self.bg_img2.x = self.bg_img1.width
-
-        self.background.add(self.bg_img1)
-        self.background.add(self.bg_img2)
-        # self.background.parallax = 0
-        self.background.x = 0
-        self.background.y = 0
-
-        self.add(self.background)
-
-        # self.scroll_mgr.add(self.background, z = -1)
+        self.background_layer = BackgroundLayer()
+        self.add(self.background_layer)
 
     def load_players(self):
-        self.player_layer = PlayerLayer(self)
+        self.player_layer = PlayerLayer()
         self.add(self.player_layer)
-
-        # self.scroll_mgr.add(self.player_layer, z = 100)
 
 if __name__ == "__main__":
     cocos.director.director.init()
