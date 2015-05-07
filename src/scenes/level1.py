@@ -1,7 +1,7 @@
 import cocos
 
-from src.layers.background_layer import BackgroundLayer
-from src.layers.player_layer import PlayerLayer
+from src.core.layers.background_layer import BackgroundLayer
+from src.core.layers.player_layer import PlayerLayer
 
 class Level1(cocos.scene.Scene):
     def __init__(self):

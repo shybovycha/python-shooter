@@ -1,6 +1,6 @@
 import cocos
 
-from src.modules.parallax_layer import ParallaxLayer
+from src.core.modules.parallax_layer import ParallaxLayer
 
 class BackgroundLayer(cocos.layer.Layer):
     is_event_handler = True

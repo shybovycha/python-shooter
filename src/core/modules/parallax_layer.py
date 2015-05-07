@@ -1,4 +1,4 @@
-from src.modules.sprite import Sprite
+from src.core.modules.sprite import Sprite
 
 class ParallaxLayer(object):
     """Class representing any background, scrolled in time. Endless scrolling..."""

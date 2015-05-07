@@ -1,6 +1,6 @@
 import cocos
 
-from src.modules.player import Player
+from src.core.modules.player import Player
 
 class PlayerLayer(cocos.layer.Layer):
     is_event_handler = True
