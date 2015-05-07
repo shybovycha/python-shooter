@@ -1,23 +1,25 @@
-import cocos
-from cocos.actions import *
-from sprite import Sprite
+import math
+from src.modules.sprite import Sprite
 
 class CollidableSprite(Sprite):
-    def __init__(self, image, x = 0, y = 0, rotation = 0, anchor = (0, 0), bound_to_window = False):
-        super(CollidableSprite, self).__init__(image, x = x, y = y, rotation = rotation, anchor = anchor, bound_to_window = bound_to_window)
+    def __init__(self, image_path, position=(0, 0), rotation=0, bound_to_window=False):
+        super(CollidableSprite, self).__init__(image_path,
+                                               position=position,
+                                               rotation=rotation,
+                                               bound_to_window=bound_to_window)
 
         self.radius = max(self.sprite.width, self.sprite.height)
 
-    def _distance(self, p1, p2):
-        x1, y1 = p1
-        x2, y2 = p2
-        return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
+    def _distance(self, point):
+        x_pos1, y_pos1 = self.position()
+        x_pos2, y_pos2 = point
+        return math.sqrt((x_pos1 - x_pos2)**2 + (y_pos1 - y_pos2)**2)
 
     def check_collision(self, other):
-        d = self._distance(self.x, self.y, other.x, other.y)
-        r1, r2 = self.radius, other.radius
+        centers_distance = self._distance(other.position())
+        radius1, radius2 = self.radius, other.radius
 
-        if (d <= r1 + r2):
+        if centers_distance <= radius1 + radius2:
             return True
         else:
             return False

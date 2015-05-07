@@ -1,5 +1,6 @@
-from collidable_sprite import CollidableSprite
+from src.modules.collidable_sprite import CollidableSprite
 
 class Player(CollidableSprite):
     def __init__(self):
-        super(Player, self).__init__('resources/ships/spaceship1_final.png', rotation = 90, bound_to_window = True)
+        player_img = 'resources/ships/spaceship1_final.png'
+        super(Player, self).__init__(player_img, rotation=90, bound_to_window=True)

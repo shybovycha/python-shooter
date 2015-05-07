@@ -25,3 +25,6 @@ Dla instalacji modułów, użyć `pip`:
 
     pip install cocos2d
 
+## TODO
+
+1. Create a PlayerController class, which will encapsulate both player instance and his controlling functions (mouse / keyboard). Layer shall contain multiple PlayerControllers and pass on_mouse_motion and on_key_press to them.

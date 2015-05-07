@@ -1,11 +1,10 @@
 import cocos
-from cocos.actions import *
 
-from src.scenes.level1_scene import Level1Scene
+from src.scenes.level1 import Level1
 
 if __name__ == "__main__":
     cocos.director.director.init()
 
-    level1_scene = Level1Scene()
+    level_scene = Level1()
 
-    cocos.director.director.run(level1_scene)
+    cocos.director.director.run(level_scene)
