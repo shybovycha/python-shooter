@@ -12,3 +12,7 @@ class ResourceManager(object):
     @staticmethod
     def get_boss_image():
         return 'resources/ships/boss%d.png' % random.randint(1, 5)
+
+    @staticmethod
+    def get_background_image():
+        return 'resources/backgrounds/space%d.png' % random.randint(1, 1)

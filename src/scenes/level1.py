@@ -1,24 +1,21 @@
 import cocos
 
-from src.core.layers.background_layer import BackgroundLayer
-from src.core.layers.player_layer import PlayerLayer
+from src.core.modules.base_scene import BaseScene
+from src.core.modules.enemy import Enemy
 
-class Level1(cocos.scene.Scene):
+class Level1(BaseScene):
     def __init__(self):
         super(Level1, self).__init__()
-        self.background_layer = None
-        self.player_layer = None
 
-    def on_enter(self):
-        super(Level1, self).on_enter()
+    def enemy_waves(self):
+        waves = []
 
-        self.load_map()
-        self.load_players()
+        enemy1 = Enemy()
+        enemy1.set_y(20)
+        enemy2 = Enemy()
+        enemy2.set_y(100)
 
-    def load_map(self):
-        self.background_layer = BackgroundLayer()
-        self.add(self.background_layer)
+        wave1 = [enemy1, enemy2]
+        waves.append(wave1)
 
-    def load_players(self):
-        self.player_layer = PlayerLayer()
-        self.add(self.player_layer)
+        return waves

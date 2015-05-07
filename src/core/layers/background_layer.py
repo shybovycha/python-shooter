@@ -1,17 +1,21 @@
 import cocos
 
 from src.core.modules.parallax_layer import ParallaxLayer
+from src.core.modules.resource_manager import ResourceManager
 
 class BackgroundLayer(cocos.layer.Layer):
     is_event_handler = True
 
-    def __init__(self):
+    def __init__(self, image=None):
         super(BackgroundLayer, self).__init__()
 
-        self.parallax_layer = ParallaxLayer('resources/backgrounds/space1.png')
+        if image is None:
+            image = ResourceManager.get_background_image()
+
+        self.parallax_layer = ParallaxLayer(image)
 
         self.add(self.parallax_layer.bg_img1.sprite)
         self.add(self.parallax_layer.bg_img2.sprite)
 
-    def _step(self, dt):
-        self.parallax_layer.shift_background(dt)
+    def _step(self, delta_time):
+        self.parallax_layer.shift_background(delta_time)

@@ -29,6 +29,9 @@ class Missle(DestroyableEntity):
         if type(entity).__name__ != type(self.parent).__name__:
             self.die()
 
+    def update(self, delta_time=1.0):
+        self.move(delta_time)
+
     def move(self, delta_time=1.0):
         """
             Move missle in its direction.
