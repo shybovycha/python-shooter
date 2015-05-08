@@ -3,6 +3,7 @@ import cocos, threading
 from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
+from src.core.modules.collision_manager import CollisionManager
 
 class EnemyLayer(cocos.layer.Layer):
     """
@@ -130,6 +131,8 @@ class EnemyLayer(cocos.layer.Layer):
             Called each frame. This is a good place to
             update all enemies and their missles.
         """
+
+        CollisionManager.update()
 
         _enemies = self.enemies()
         _missles = self.missles()

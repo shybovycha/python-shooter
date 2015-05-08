@@ -18,6 +18,8 @@ class DestroyableEntity(CollidableSprite):
             Cool and fast method to destroy something.
         """
 
+        super(DestroyableEntity, self).die()
+
         self.health = 0
 
     def is_alive(self):
@@ -32,8 +34,8 @@ class DestroyableEntity(CollidableSprite):
             When a destroyable entity hits another entity, both take damage.
         """
 
-        self.take_damage(entity.hit_damage())
-        entity.take_damage(self.hit_damage())
+        self.take_damage(entity.hit_damage)
+        entity.take_damage(self.hit_damage)
 
     def hit_damage(self):
         """
@@ -51,9 +53,9 @@ class DestroyableEntity(CollidableSprite):
         """
 
         if self.armor is not None:
-            self.health -= damage
-        else:
             self.health -= self.armor.absorb(damage)
+        else:
+            self.health -= damage
 
     def set_armor(self, armor):
         """
