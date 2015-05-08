@@ -1,6 +1,6 @@
 import cocos, threading
 
-from cocos.actions import ScaleBy, FadeOut, Delay
+from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
 
@@ -81,8 +81,7 @@ class EnemyLayer(cocos.layer.Layer):
             screen_center_y = (screen_height / 2) - half_label_size
             screen_center = (screen_center_x, screen_center_y)
 
-            self.countdown_label = cocos.text.Label('Get ready!',
-                                                    font_name='Times New Roman',
+            self.countdown_label = cocos.text.Label("Get ready!Let's rock!012345",
                                                     font_size=font_size,
                                                     anchor_x='center',
                                                     anchor_y='center')
@@ -90,17 +89,13 @@ class EnemyLayer(cocos.layer.Layer):
             self.countdown_label.position = screen_center
             self.add(self.countdown_label)
 
-            self.time_to_next_wave = self.wave_delay
+            self.countdown_label.element.text = "Get ready!"
 
-            print "Get ready!"
+            self.time_to_next_wave = self.wave_delay + 1
         elif self.time_to_next_wave > 0:
-            self.countdown_label.text = '%d' % self.time_to_next_wave
-
-            print self.time_to_next_wave
+            self.countdown_label.element.text = str(self.time_to_next_wave)
         elif self.time_to_next_wave == 0:
-            self.countdown_label.text = 'GO!'
-
-            print "GO!"
+            self.countdown_label.element.text = "Let's rock!"
 
         if self.time_to_next_wave > -1:
             self.time_to_next_wave -= 1
@@ -111,9 +106,11 @@ class EnemyLayer(cocos.layer.Layer):
             self.countdown_label = None
 
         if self.countdown_label is not None:
-            scale = ScaleBy(3, duration=2)
-            fade_out = Delay(2) + FadeOut(1)
-            label_animation = scale | fade_out
+            fade_in = FadeIn(0.1)
+            scale1 = ScaleTo(3, duration=0.75)
+            fade_out = Delay(0.75) + FadeOut(0.24)
+            scale2 = Delay(0.99) + ScaleTo(1, duration=0)
+            label_animation = fade_in | scale1 | fade_out | scale2
 
             self.countdown_label.do(label_animation)
 
