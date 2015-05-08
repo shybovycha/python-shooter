@@ -15,7 +15,7 @@ class Enemy(ShootingEntity):
         self.move()
 
     def move(self, delta_time=1.0):
-        move_speed = 8.0
-        delta = move_speed * 0.3 * int(delta_time * 100)
+        move_speed = 3.0
+        delta = move_speed * 0.3 * int(delta_time) # * 100)
 
         self.set_x(self.x() - delta)

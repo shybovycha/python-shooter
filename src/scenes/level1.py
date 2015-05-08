@@ -2,6 +2,7 @@ import cocos
 
 from src.core.modules.base_scene import BaseScene
 from src.core.modules.enemy import Enemy
+from src.core.modules.sprite import Sprite
 
 class Level1(BaseScene):
     def __init__(self):
@@ -10,10 +11,11 @@ class Level1(BaseScene):
     def enemy_waves(self):
         waves = []
 
+        window_width, window_height = Sprite.window_size()
         enemy1 = Enemy()
-        enemy1.set_y(20)
+        enemy1.set_position(window_width + 10, 220)
         enemy2 = Enemy()
-        enemy2.set_y(100)
+        enemy2.set_position(window_width + 50, 350)
 
         wave1 = [enemy1, enemy2]
         waves.append(wave1)

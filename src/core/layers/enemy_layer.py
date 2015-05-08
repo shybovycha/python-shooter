@@ -52,7 +52,7 @@ class EnemyLayer(cocos.layer.Layer):
             Returns all the missles alive for all the enemies alive.
         """
 
-        result = sum([enemy.missles() for enemy in self.enemies()], [])
+        result = sum([enemy.missles for enemy in self.enemies()], [])
         return [missle for missle in result if missle.is_alive()]
 
     def is_done(self):
@@ -67,6 +67,9 @@ class EnemyLayer(cocos.layer.Layer):
             self.current_wave = 0
         else:
             self.current_wave += 1
+
+        for enemy in self.enemies():
+            self.add(enemy.sprite)
 
     def update_countdown(self):
         """
@@ -104,6 +107,7 @@ class EnemyLayer(cocos.layer.Layer):
         else:
             self.time_to_next_wave = None
             self.countdown_label = None
+            self.deploy_enemies()
 
         if self.countdown_label is not None:
             fade_in = FadeIn(0.1)
