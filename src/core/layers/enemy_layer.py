@@ -1,6 +1,6 @@
-import cocos, threading
+import cocos
 
-from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay
+from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay, CallFunc
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
 from src.core.modules.collision_manager import CollisionManager
@@ -18,8 +18,14 @@ class EnemyLayer(cocos.layer.Layer):
         self.waves = []
         self.current_wave = None
         self.wave_delay = 5
-        self.time_to_next_wave = None
         self.countdown_label = None
+        self.countdown_texts = []
+
+    def generate_countdown_texts(self):
+        numbers = [ str(i) for i in reversed(range(1, self.wave_delay + 1)) ]
+        self.countdown_texts = ["Get ready!"]
+        self.countdown_texts.extend(numbers)
+        self.countdown_texts.append("Let's rock!")
 
     def set_enemy_waves(self, waves):
         self.waves = waves
@@ -74,10 +80,17 @@ class EnemyLayer(cocos.layer.Layer):
 
             CollisionManager.register(enemy)
 
-    def update_countdown(self):
+    def update_countdown_label(self):
         """
             This huge method just creates a label like "Get ready! 5 4 3 2 1 GO!"
         """
+
+        if len(self.countdown_texts) < 1:
+            self.countdown_label = None
+            self.deploy_enemies()
+            return
+
+        text = self.countdown_texts.pop(0)
 
         if self.countdown_label is None:
             font_size = 32
@@ -87,7 +100,7 @@ class EnemyLayer(cocos.layer.Layer):
             screen_center_y = (screen_height / 2) - half_label_size
             screen_center = (screen_center_x, screen_center_y)
 
-            self.countdown_label = cocos.text.Label("Get ready!Let's rock!012345",
+            self.countdown_label = cocos.text.Label(text,
                                                     font_size=font_size,
                                                     anchor_x='center',
                                                     anchor_y='center')
@@ -95,38 +108,24 @@ class EnemyLayer(cocos.layer.Layer):
             self.countdown_label.position = screen_center
             self.add(self.countdown_label)
 
-            self.countdown_label.element.text = "Get ready!"
+        self.countdown_label.element.text = text
 
-            self.time_to_next_wave = self.wave_delay + 1
-        elif self.time_to_next_wave > 0:
-            self.countdown_label.element.text = str(self.time_to_next_wave)
-        elif self.time_to_next_wave == 0:
-            self.countdown_label.element.text = "Let's rock!"
+        fade_in = FadeIn(0.1)
+        scale1 = ScaleTo(3, duration=0.75)
+        fade_out = Delay(0.75) + FadeOut(0.24)
+        scale2 = Delay(0.99) + ScaleTo(1, duration=0.1)
+        call_update = Delay(1.1) + CallFunc(self.update_countdown_label)
+        label_animation = fade_in | scale1 | fade_out | scale2 | call_update
 
-        if self.time_to_next_wave > -1:
-            self.time_to_next_wave -= 1
-            timer = threading.Timer(1.0, self.update_countdown)
-            timer.start()
-        else:
-            self.time_to_next_wave = None
-            self.countdown_label = None
-            self.deploy_enemies()
-
-        if self.countdown_label is not None:
-            fade_in = FadeIn(0.1)
-            scale1 = ScaleTo(3, duration=0.75)
-            fade_out = Delay(0.75) + FadeOut(0.24)
-            scale2 = Delay(0.99) + ScaleTo(1, duration=0)
-            label_animation = fade_in | scale1 | fade_out | scale2
-
-            self.countdown_label.do(label_animation)
+        self.countdown_label.do(label_animation)
 
     def next_wave(self):
         """
             Starts the countdown and then deploys new wave.
         """
 
-        self.update_countdown()
+        self.generate_countdown_texts()
+        self.update_countdown_label()
 
     def _step(self, delta_time):
         """
