@@ -7,7 +7,8 @@ class CollisionManager(object):
 
     @classmethod
     def unregister(klass, entity):
-        klass.entities.remove(entity)
+        if entity in klass.entities:
+            klass.entities.remove(entity)
 
     @classmethod
     def update(klass):

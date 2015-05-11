@@ -1,6 +1,7 @@
 import cocos
 
 from src.core.modules.player import Player
+from src.core.modules.collision_manager import CollisionManager
 
 class PlayerLayer(cocos.layer.Layer):
     """
@@ -16,6 +17,7 @@ class PlayerLayer(cocos.layer.Layer):
 
         self.player = Player()
         self.add(self.player.sprite)
+        CollisionManager.register(self.player)
 
     def on_mouse_motion(self, x_pos, y_pos, _dx, _dy):
         """

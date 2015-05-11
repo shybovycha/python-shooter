@@ -1,4 +1,5 @@
 from src.core.modules.collidable_sprite import CollidableSprite
+from src.core.modules.collision_manager import CollisionManager
 
 class DestroyableEntity(CollidableSprite):
     """
@@ -18,9 +19,9 @@ class DestroyableEntity(CollidableSprite):
             Cool and fast method to destroy something.
         """
 
-        super(DestroyableEntity, self).die()
-
         self.health = 0
+
+        CollisionManager.unregister(self)
 
     def is_alive(self):
         """
@@ -36,13 +37,6 @@ class DestroyableEntity(CollidableSprite):
 
         self.take_damage(entity.hit_damage)
         entity.take_damage(self.hit_damage)
-
-    def hit_damage(self):
-        """
-            Returns the amount of damage, another entity will take when hit this one.
-        """
-
-        return self.hit_damage
 
     def take_damage(self, damage):
         """

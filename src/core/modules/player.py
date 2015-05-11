@@ -30,7 +30,8 @@ class Player(ShootingEntity):
             TODO: implement bonus hits player
         """
 
-        pass
+        #if isinstance(entity, Enemy):
+        self.take_damage(entity.hit_damage)
 
     def gain_score_points(self, points_gained):
         """

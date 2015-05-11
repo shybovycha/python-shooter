@@ -72,6 +72,8 @@ class EnemyLayer(cocos.layer.Layer):
         for enemy in self.enemies():
             self.add(enemy.sprite)
 
+            CollisionManager.register(enemy)
+
     def update_countdown(self):
         """
             This huge method just creates a label like "Get ready! 5 4 3 2 1 GO!"

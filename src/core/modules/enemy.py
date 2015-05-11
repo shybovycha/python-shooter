@@ -12,6 +12,10 @@ class Enemy(ShootingEntity):
         self.hit_damage = 100
 
     def update(self, delta_time=1.0):
+        if not self.is_alive():
+            self.die()
+            return
+
         self.move()
 
     def move(self, delta_time=1.0):
@@ -19,3 +23,9 @@ class Enemy(ShootingEntity):
         delta = move_speed * 0.3 * int(delta_time) # * 100)
 
         self.set_x(self.x() - delta)
+
+    def on_hit_entity(self, other):
+        if type(self) == type(other):
+            return
+
+        self.take_damage(other.hit_damage)

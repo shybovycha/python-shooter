@@ -20,15 +20,6 @@ class CollidableSprite(Sprite):
 
         self.radius = max(self.sprite.width, self.sprite.height)
 
-        CollisionManager.register(self)
-
-    def die(self):
-        """
-            Disables collision detection for this sprite.
-        """
-
-        CollisionManager.unregister(self)
-
     def _distance(self, point):
         """
             Returns distance from this sprite to another one.
