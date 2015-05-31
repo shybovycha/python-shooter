@@ -13,8 +13,10 @@ class Level1(BaseScene):
 
         window_width, window_height = Sprite.window_size()
         enemy1 = Enemy()
+        enemy1.health = 100
         enemy1.set_position(window_width + 10, 220)
         enemy2 = Enemy()
+        enemy1.health = 50
         enemy2.set_position(window_width + 50, 350)
 
         wave1 = [enemy1, enemy2]

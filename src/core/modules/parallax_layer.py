@@ -16,15 +16,12 @@ class ParallaxLayer(object):
 
         scroll_speed = 6.0
         delta = scroll_speed * 0.3 * int(delta_time * 100)
-        padding_zone = scroll_speed * 5
 
         self.bg_img1.set_x(self.bg_img1.get_x() - delta)
         self.bg_img2.set_x(self.bg_img2.get_x() - delta)
 
-        win_width, win_height = Sprite.window_size()
-
-        if self.bg_img1.get_x() < -self.bg_img1.width() + win_width + padding_zone:
-            self.bg_img2.set_x(self.bg_img1.get_x() + self.bg_img1.width())
+        if self.bg_img1.get_x() < -self.bg_img1.width():
+            self.bg_img1.set_x(self.bg_img2.get_x() + self.bg_img2.width())
 
             tmp = self.bg_img1
             self.bg_img1 = self.bg_img2

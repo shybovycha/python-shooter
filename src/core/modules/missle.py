@@ -27,6 +27,10 @@ class Missle(DestroyableEntity):
             self.die(detonate=False)
 
     def update(self, delta_time=1.0):
+        """
+            This missle is not artifical enough to move anywhere but forward.
+        """
+
         self.move(delta_time)
 
     def move(self, delta_time=1.0):
@@ -39,6 +43,10 @@ class Missle(DestroyableEntity):
         self.set_x(self.get_x() + delta)
 
     def die(self):
+        """
+            Just remove itself.
+        """
+
         DestroyableEntity.die(self)
 
         self.owner.missles.remove(self)
