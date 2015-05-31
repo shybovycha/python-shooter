@@ -18,7 +18,42 @@ class CollidableSprite(Sprite):
                                                rotation=rotation,
                                                bound_to_window=bound_to_window)
 
-        self.radius = max(self.sprite.width, self.sprite.height)
+        """
+        image_data = self.sprite.image.get_image_data()
+        cols, rows = image_data.width, image_data.height
+
+        # return the alpha component of pixels; store image_data.width bytes per data row
+        pixel_data = image_data.get_data('A', cols)
+
+        min_x, max_x, min_y, max_y = cols, 0, rows, 0
+
+        for r in range(0, rows):
+            has_non_transparents = False
+
+            for c in range(0, cols):
+                if pixel_data[(r * cols) + c] > 0:
+                    has_non_transparents = True
+
+                    if c < min_x:
+                        min_x = c
+
+                    if c > max_x:
+                        max_x = c
+
+            if has_non_transparents:
+                if r < min_y:
+                    min_y = r
+
+                if r > max_y:
+                    max_y = r
+
+        width, height = max_x - min_x, max_y - min_y
+
+        self.radius = max(width / 2, height / 2)
+        self.image.image_anchor = (min_x + self.radius, min_y + self.radius)
+        """
+
+        self.radius = max(self.sprite.width / 2, self.sprite.height / 2)
 
     def _distance(self, point):
         """
