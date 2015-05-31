@@ -29,3 +29,6 @@ class Enemy(ShootingSprite):
             return
 
         self.take_damage(other.hit_damage)
+
+        if not self.is_alive():
+            self.die()

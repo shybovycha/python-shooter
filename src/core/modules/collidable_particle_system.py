@@ -17,10 +17,3 @@ class CollidableParticleSystem(ParticleSystem, CollidableEntity):
         CollidableEntity.__init__(self, radius)
 
         self.radius = radius
-
-    def rgb2color(r, g, b, a = 255.0):
-        """
-            Utilizes some helper methods for particle systems.
-        """
-
-        return Color(r / 255.0, g / 255.0, b / 255.0, a / 255.0)

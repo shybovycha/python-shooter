@@ -135,7 +135,7 @@ class EnemyLayer(cocos.layer.Layer):
 
         CollisionManager.update()
 
-        _enemies = self.enemies()
+        _enemies = self.alive_enemies()
         _missles = self.missles()
 
         for enemy in _enemies:

@@ -1,15 +1,21 @@
-from src.core.modules.collidable_particle_system import CollidableParticleSystem
-from cocos.particle import Color
+from cocos.particle import ParticleSystem, Color
 from cocos.euclid import Point2
 
-class SpaceExplosion(CollidableParticleSystem):
+class SpaceExplosion(ParticleSystem):
     """
         Class representing such a particle system, which simulates
         the explosion in a space
     """
 
+    def rgb2color(r, g, b, a = 255.0):
+        """
+            Utilizes some helper methods for particle systems.
+        """
+
+        return Color(r / 255.0, g / 255.0, b / 255.0, a / 255.0)
+
     # total particle
-    total_particles = 1700
+    total_particles = 700
 
     # duration
     duration = 0.1
