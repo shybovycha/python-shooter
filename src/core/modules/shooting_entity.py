@@ -2,8 +2,8 @@ from src.core.modules.destroyable_entity import DestroyableEntity
 from src.core.modules.missle import Missle
 
 class ShootingEntity(DestroyableEntity):
-    def __init__(self, image, rotation=0, bound_to_window=False):
-        super(ShootingEntity, self).__init__(image, rotation=rotation, bound_to_window=bound_to_window)
+    def __init__(self, radius):
+        super(ShootingEntity, self).__init__(radius)
 
         self.missles = []
         self.missle_damage = 1

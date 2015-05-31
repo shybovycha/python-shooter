@@ -1,14 +1,14 @@
-from src.core.modules.collidable_sprite import CollidableSprite
+from src.core.modules.collidable_entity import CollidableEntity
 from src.core.modules.collision_manager import CollisionManager
 
-class DestroyableEntity(CollidableSprite):
+class DestroyableEntity(CollidableEntity):
     """
         Represents entity, which may both give and take damage when hit.
         This one may die.
     """
 
-    def __init__(self, image_path, rotation=0, health=100, bound_to_window=False):
-        super(DestroyableEntity, self).__init__(image_path, rotation=rotation, bound_to_window=bound_to_window)
+    def __init__(self, radius):
+        super(DestroyableEntity, self).__init__(radius)
 
         self.health = 1
         self.hit_damage = 0

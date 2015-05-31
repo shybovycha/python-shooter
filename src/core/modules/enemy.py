@@ -1,8 +1,8 @@
 from src.core.modules.resource_manager import ResourceManager
-from src.core.modules.shooting_entity import ShootingEntity
+from src.core.modules.shooting_sprite import ShootingSprite
 from src.core.modules.missle import Missle
 
-class Enemy(ShootingEntity):
+class Enemy(ShootingSprite):
     def __init__(self, image=None):
         if image is None:
             image = ResourceManager.get_enemy_image()

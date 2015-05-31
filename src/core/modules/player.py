@@ -1,8 +1,8 @@
 from src.core.modules.resource_manager import ResourceManager
-from src.core.modules.shooting_entity import ShootingEntity
+from src.core.modules.shooting_sprite import ShootingSprite
 from src.core.modules.missle import Missle
 
-class Player(ShootingEntity):
+class Player(ShootingSprite):
     """
         Represents player, the Space Hero.
     """
@@ -30,7 +30,7 @@ class Player(ShootingEntity):
             TODO: implement bonus hits player
         """
 
-        #if isinstance(entity, Enemy):
+        # if isinstance(entity, Enemy):
         self.take_damage(entity.hit_damage)
 
     def gain_score_points(self, points_gained):
