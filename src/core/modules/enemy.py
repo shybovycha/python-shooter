@@ -10,6 +10,8 @@ class Enemy(ShootingSprite):
         super(Enemy, self).__init__(image, rotation=-90)
 
         self.hit_damage = 100
+        self.missle_direction = -1
+        self.movement_speed = 3.0
 
     def update(self, delta_time=1.0):
         if not self.is_alive():
@@ -19,13 +21,12 @@ class Enemy(ShootingSprite):
         self.move()
 
     def move(self, delta_time=1.0):
-        move_speed = 3.0
-        delta = move_speed * 0.3 * int(delta_time) # * 100)
+        delta = self.movement_speed * 0.3 * int(delta_time)
 
         self.set_x(self.get_x() - delta)
 
     def on_hit_entity(self, other):
-        if type(self) == type(other):
+        if type(self) == type(other) or (type(other).__name__ == 'PlasmaBall' and type(self) == type(other.owner)):
             return
 
         self.take_damage(other.hit_damage)

@@ -9,9 +9,14 @@ class ShootingSprite(DestroyableSprite):
         self.missles = []
         self.missle_damage = 1
         self.missle_speed = 15.0
+        self.missle_direction = 1
 
     def shoot(self):
-        missle = PlasmaBall(owner=self, damage=self.missle_damage, speed=self.missle_speed)
+        missle = PlasmaBall(owner=self,
+                            damage=self.missle_damage,
+                            speed=self.missle_speed,
+                            direction=self.missle_direction)
+
         self.missles.append(missle)
         self.sprite.parent.add(missle)
         CollisionManager.register(missle)

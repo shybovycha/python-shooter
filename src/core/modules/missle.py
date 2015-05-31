@@ -22,6 +22,9 @@ class Missle(DestroyableEntity):
             When one goes through its friend, it does not blow-up.
         """
 
+        if type(entity).__name__ == type(self).__name__:
+            return
+
         if type(entity).__name__ != type(self.owner).__name__:
             entity.take_damage(self.hit_damage)
             self.die(detonate=False)
@@ -32,6 +35,9 @@ class Missle(DestroyableEntity):
         """
 
         self.move(delta_time)
+
+        # if self.get_x() < 0 or self.get_x() > window_width:
+        #     self.die(detonate=false)
 
     def move(self, delta_time=1.0):
         """

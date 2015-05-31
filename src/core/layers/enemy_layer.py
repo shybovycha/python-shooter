@@ -138,8 +138,13 @@ class EnemyLayer(cocos.layer.Layer):
         _enemies = self.alive_enemies()
         _missles = self.missles()
 
+        screen_width, screen_height = Sprite.window_size()
+
         for enemy in _enemies:
             enemy.update(delta_time)
 
         for missle in _missles:
             missle.update(delta_time)
+
+            if missle.get_x() < 0 or missle.get_x() > screen_width:
+                missle.die(detonate=False)
