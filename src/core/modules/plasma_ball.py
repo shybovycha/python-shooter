@@ -1,14 +1,16 @@
 from cocos.particle import ParticleSystem, Color
 from cocos.euclid import Point2
-from src.core.modules.destroyable_particle_system import DestroyableParticleSystem
 
-class PlasmaBall(DestroyableParticleSystem):
+from src.core.modules.destroyable_particle_system import DestroyableParticleSystem
+from src.core.modules.missle import Missle
+
+class PlasmaBall(DestroyableParticleSystem, Missle):
     """
         Pretty plasma missle particle system.
     """
 
     # total particles
-    total_particles = 550
+    total_particles = 150
 
     # duration
     duration = -1
@@ -58,7 +60,8 @@ class PlasmaBall(DestroyableParticleSystem):
     # color modulate
     color_modulate = True
 
-    def __init__(self, color = Color(0.2, 0.7, 0.7, 1.0)):
-        super(PlasmaBall, self).__init__(self.size)
+    def __init__(self, owner=None, damage=1, speed=10, color=Color(0.2, 0.7, 0.7, 1.0)):
+        DestroyableParticleSystem.__init__(self, self.size)
+        Missle.__init__(self, self.size, owner, damage, speed)
 
         self.start_color = color

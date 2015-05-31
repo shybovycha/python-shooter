@@ -1,13 +1,12 @@
 import cocos
 
 from src.core.modules.player import Player
+from src.core.modules.sprite import Sprite
 from src.core.modules.collision_manager import CollisionManager
 
 class PlayerLayer(cocos.layer.Layer):
     """
         Layer, containing and controlling players.
-
-        TODO: implement PlayerController and load either one or more players.
     """
 
     is_event_handler = True
@@ -19,9 +18,20 @@ class PlayerLayer(cocos.layer.Layer):
         self.add(self.player.sprite)
         CollisionManager.register(self.player)
 
-    def on_mouse_motion(self, x_pos, y_pos, _dx, _dy):
+    def _step(self, delta_time):
         """
-            Control player with mouse.
+            Called each frame. This is a good place to
+            update all player' missles.
         """
 
-        self.player.set_position(x_pos, y_pos)
+        CollisionManager.update()
+
+        _missles = self.player.alive_missles()
+        padding = 80
+        screen_width, screen_height = Sprite.window_size()
+
+        for missle in _missles:
+            if missle.get_x() > screen_width + padding or missle.get_x() < 0:
+                missle.die(detonate=False)
+
+            missle.update(delta_time)

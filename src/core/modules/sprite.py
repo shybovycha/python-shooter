@@ -30,18 +30,18 @@ class Sprite(object):
         self.sprite.position = x_pos, y_pos
 
     def set_x(self, x_pos):
-        _, y_pos = self.position()
+        _, y_pos = self.get_position()
         self.set_position(x_pos, y_pos)
 
     def set_y(self, y_pos):
-        x_pos, _ = self.position()
+        x_pos, _ = self.get_position()
         self.set_position(x_pos, y_pos)
 
-    def position(self):
+    def get_position(self):
         return self.sprite.position
 
-    def x(self):
+    def get_x(self):
         return self.sprite.position[0]
 
-    def y(self):
+    def get_y(self):
         return self.sprite.position[1]

@@ -18,7 +18,7 @@ class CollidableEntity():
             Returns distance from this entity to another one.
         """
 
-        x_pos1, y_pos1 = self.position()
+        x_pos1, y_pos1 = self.get_position()
         x_pos2, y_pos2 = point
         return math.sqrt((x_pos1 - x_pos2)**2 + (y_pos1 - y_pos2)**2)
 
@@ -27,7 +27,7 @@ class CollidableEntity():
             Checks if two collision shapes overlap.
         """
 
-        centers_distance = self._distance(other.position())
+        centers_distance = self._distance(other.get_position())
         radius1, radius2 = self.radius, other.radius
 
         if centers_distance <= radius1 + radius2:

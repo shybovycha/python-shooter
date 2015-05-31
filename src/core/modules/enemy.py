@@ -22,7 +22,7 @@ class Enemy(ShootingSprite):
         move_speed = 3.0
         delta = move_speed * 0.3 * int(delta_time) # * 100)
 
-        self.set_x(self.x() - delta)
+        self.set_x(self.get_x() - delta)
 
     def on_hit_entity(self, other):
         if type(self) == type(other):

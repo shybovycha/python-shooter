@@ -1,7 +1,7 @@
 import cocos
 
 from src.core.layers.background_layer import BackgroundLayer
-from src.core.layers.player_layer import PlayerLayer
+from src.core.layers.mouse_player_controller import MousePlayerController
 from src.core.layers.enemy_layer import EnemyLayer
 
 class BaseScene(cocos.scene.Scene):
@@ -44,7 +44,7 @@ class BaseScene(cocos.scene.Scene):
             Sets up players' layer.
         """
 
-        self.player_layer = PlayerLayer()
+        self.player_layer = MousePlayerController()
         self.add(self.player_layer)
 
     def load_enemies(self):
