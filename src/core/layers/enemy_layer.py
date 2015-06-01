@@ -1,11 +1,14 @@
 import cocos
 
 from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay, CallFunc
+
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
 from src.core.modules.collision_manager import CollisionManager
 
-class EnemyLayer(cocos.layer.Layer):
+import src.core.modules.game_manager
+
+class EnemyLayer(cocos.layer.base_layers.Layer):
     """
         Layer, containing and controlling enemies.
     """
@@ -20,6 +23,10 @@ class EnemyLayer(cocos.layer.Layer):
         self.wave_delay = 5
         self.countdown_label = None
         self.countdown_texts = []
+        self.is_started = False
+        self.is_next_wave_notified = False
+        self.is_enemies_deployed = False
+        self.next_level_notified = False
 
     def generate_countdown_texts(self):
         numbers = [ str(i) for i in reversed(range(1, self.wave_delay + 1)) ]
@@ -67,7 +74,7 @@ class EnemyLayer(cocos.layer.Layer):
             Checks if this level is done.
         """
 
-        return (self.current_wave >= len(self.waves))
+        return (self.current_wave is not None and self.current_wave >= len(self.waves))
 
     def deploy_enemies(self):
         if self.current_wave is None:
@@ -80,6 +87,8 @@ class EnemyLayer(cocos.layer.Layer):
 
             CollisionManager.register(enemy)
 
+        self.is_enemies_deployed = True
+
     def update_countdown_label(self):
         """
             This huge method just creates a label like "Get ready! 5 4 3 2 1 GO!"
@@ -88,6 +97,8 @@ class EnemyLayer(cocos.layer.Layer):
         if len(self.countdown_texts) < 1:
             self.countdown_label = None
             self.deploy_enemies()
+            self.is_next_wave_notified = False
+            self.is_started = True
             return
 
         text = self.countdown_texts.pop(0)
@@ -132,6 +143,19 @@ class EnemyLayer(cocos.layer.Layer):
             Called each frame. This is a good place to
             update all enemies and their missles.
         """
+
+        if self.is_started and self.is_enemies_deployed and not self.has_enemies():
+            if self.current_wave >= len(self.waves) - 1 and not self.next_level_notified:
+                self.next_level_notified = True
+                goto_next_level = Delay(2) + CallFunc(src.core.modules.game_manager.GameManager.next_level)
+                self.parent.do(goto_next_level)
+            else:
+                if not self.is_next_wave_notified:
+                    self.is_enemies_deployed = False
+                    self.is_next_wave_notified = True
+
+                    deploy_next_wave = Delay(2) + CallFunc(self.next_wave)
+                    self.parent.do(deploy_next_wave)
 
         CollisionManager.update()
 
