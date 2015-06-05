@@ -2,7 +2,7 @@ import math
 
 from src.core.modules.collision_manager import CollisionManager
 
-class CollidableEntity():
+class CollidableEntity(object):
     """
         Describes entity with collision detection.
         Collision shape is just a circle and collision detection
