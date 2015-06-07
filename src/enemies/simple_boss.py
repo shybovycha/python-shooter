@@ -23,9 +23,9 @@ class SimpleBoss(Enemy):
         self.start_x = window_width - 50
         self.start_y = None
 
-        self.shooting_positions = [25, 150, 300, 425, 500, 550, 650, 750, 900]
+        self.shooting_ys = [25, 150, 300, 425, 500, 550, 650, 750, 900]
 
-    def update(self, delta_time=1.0):
+    def update(self, _delta_time=1.0):
         """
             All its brains is simple `if` structure
         """
@@ -36,10 +36,10 @@ class SimpleBoss(Enemy):
 
         self.move()
 
-        threshold = 3.0
+        delta_p = 3.0
         self_y = self.get_y()
 
-        if min([abs(self_y - shoot_y) for shoot_y in self.shooting_positions]) < threshold:
+        if min([abs(self_y - shoot_y) for shoot_y in self.shooting_ys]) < delta_p:
             self.shoot()
 
     def move(self, delta_time=1.0):
@@ -58,6 +58,6 @@ class SimpleBoss(Enemy):
         if self.tau > math.pi * 2:
             self.tau = 0
 
-        dy = math.sin(self.tau) * 150
+        delta_y = math.sin(self.tau) * 150
 
-        self.set_y(self.start_y + dy)
+        self.set_y(self.start_y + delta_y)

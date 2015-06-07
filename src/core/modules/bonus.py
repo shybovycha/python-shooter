@@ -5,8 +5,8 @@ class Bonus(DestroyableSprite):
         Represents abstract bonus.
     """
 
-    def __init__(self, image_path, position=(0, 0)):
-        super(Bonus, self).__init__(image_path, position, rotation=0, bound_to_window=False)
+    def __init__(self, image, position=(0, 0)):
+        super(Bonus, self).__init__(image, position, rotation=0, bound_to_window=False)
 
         self.health = 1
         self.hit_damage = 0

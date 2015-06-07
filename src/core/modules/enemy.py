@@ -21,7 +21,7 @@ class Enemy(ShootingSprite):
         self.bonus_classes = []
         self.detonate = True
 
-    def update(self, delta_time=1.0):
+    def update(self, _delta_time=1.0):
         """
             Here all the intelligence hides.
         """
@@ -47,7 +47,10 @@ class Enemy(ShootingSprite):
             Default collision handler: take damage, die if needed.
         """
 
-        if isinstance(self, type(other)) or (isinstance(other, PlasmaBall) and isinstance(self, type(other.owner))):
+        if isinstance(self, type(other)):
+            return
+
+        if isinstance(other, PlasmaBall) and isinstance(self, type(other.owner)):
             return
 
         self.take_damage(other.hit_damage)
@@ -64,9 +67,9 @@ class Enemy(ShootingSprite):
             return
 
         for bonus_class in self.bonus_classes:
-            sx, sy = self.get_position()
-            rx, ry = random.randrange(10, 50), random.randrange(10, 50)
-            position = (sx + rx, sy + ry)
+            start_x, start_y = self.get_position()
+            rand_x, rand_y = random.randrange(10, 50), random.randrange(10, 50)
+            position = (start_x + rand_x, start_y + rand_y)
             bonus = bonus_class(position=position)
             layer = self.sprite.parent
             layer.register_bonus(bonus)

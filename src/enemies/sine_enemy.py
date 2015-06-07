@@ -18,7 +18,7 @@ class SineEnemy(Enemy):
         self.tau = 0
         self.start_y = None
 
-    def update(self, delta_time=1.0):
+    def update(self, _delta_time=1.0):
         """
             Only made for moving along a sine wave
         """
@@ -46,6 +46,6 @@ class SineEnemy(Enemy):
         if self.tau > math.pi * 2:
             self.tau = 0
 
-        dy = math.sin(self.tau) * 50
+        delta_y = math.sin(self.tau) * 50
 
-        self.set_y(self.start_y + dy)
+        self.set_y(self.start_y + delta_y)

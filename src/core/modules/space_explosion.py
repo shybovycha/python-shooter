@@ -2,11 +2,11 @@ from cocos.particle import ParticleSystem, Color
 from cocos.euclid import Point2
 
 def rgb2color(red, green, blue, alpha=255.0):
-        """
-            Utilizes some helper methods for particle systems.
-        """
+    """
+        Utilizes some helper methods for particle systems.
+    """
 
-        return Color(red / 255.0, green / 255.0, blue / 255.0, alpha / 255.0)
+    return Color(red / 255.0, green / 255.0, blue / 255.0, alpha / 255.0)
 
 class SpaceExplosion(ParticleSystem):
     """
