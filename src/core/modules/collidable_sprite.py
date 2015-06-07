@@ -1,7 +1,4 @@
-import math
-
 from src.core.modules.sprite import Sprite
-from src.core.modules.collision_manager import CollisionManager
 from src.core.modules.collidable_entity import CollidableEntity
 
 class CollidableSprite(Sprite, CollidableEntity):
