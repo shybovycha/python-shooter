@@ -25,9 +25,11 @@ class Missle(DestroyableEntity):
         if type(entity).__name__ == type(self).__name__:
             return
 
-        if type(entity).__name__ != type(self.owner).__name__:
-            entity.take_damage(self.hit_damage)
-            self.die(detonate=False)
+        if type(entity).__name__ == type(self.owner).__name__:
+            return
+
+        entity.take_damage(self.hit_damage)
+        self.die(detonate=False)
 
     def update(self, delta_time=1.0):
         """

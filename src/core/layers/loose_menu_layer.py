@@ -9,7 +9,7 @@ import src.core.modules.game_manager
 
 class LooseMenuLayer(cocos.menu.Menu):
     def __init__(self):
-        super(LooseMenuLayer, self).__init__()
+        super(LooseMenuLayer, self).__init__("YOU LOOSE")
 
         menu_items = []
         menu_items.append(MenuItem('Restart', self.on_restart))
@@ -17,7 +17,7 @@ class LooseMenuLayer(cocos.menu.Menu):
         self.create_menu(menu_items, zoom_in(), zoom_out())
 
     def on_restart(self):
-        pass
+        src.core.modules.game_manager.GameManager.restart()
 
     def on_quit(self):
-        pass
+        src.core.modules.game_manager.GameManager.quit()

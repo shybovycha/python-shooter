@@ -9,7 +9,7 @@ import src.core.modules.game_manager
 
 class WinMenuLayer(cocos.menu.Menu):
     def __init__(self):
-        super(WinMenuLayer, self).__init__()
+        super(WinMenuLayer, self).__init__("YOU WIN")
 
         menu_items = []
         menu_items.append(MenuItem('Once again!', self.on_restart))

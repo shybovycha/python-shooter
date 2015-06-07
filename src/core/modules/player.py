@@ -1,6 +1,7 @@
 from src.core.modules.resource_manager import ResourceManager
 from src.core.modules.shooting_sprite import ShootingSprite
 from src.core.modules.missle import Missle
+from src.core.modules.enemy import Enemy
 
 class Player(ShootingSprite):
     """
@@ -30,8 +31,11 @@ class Player(ShootingSprite):
             TODO: implement bonus hits player
         """
 
-        # if isinstance(entity, Enemy):
-        self.take_damage(entity.hit_damage)
+        if isinstance(entity, Enemy):
+           self.take_damage(entity.hit_damage)
+
+        if isinstance(entity, Missle) and not isinstance(entity.owner, Player):
+            self.take_damage(entity.hit_damage)
 
     def gain_score_points(self, points_gained):
         """

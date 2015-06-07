@@ -3,6 +3,7 @@ import cocos
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
 from src.core.modules.collision_manager import CollisionManager
+from src.core.modules.game_manager import GameManager
 
 class PlayerLayer(cocos.layer.Layer):
     """
@@ -23,6 +24,9 @@ class PlayerLayer(cocos.layer.Layer):
             Called each frame. This is a good place to
             update all player' missles.
         """
+
+        if not self.player.is_alive():
+            GameManager.loose()
 
         CollisionManager.update()
 

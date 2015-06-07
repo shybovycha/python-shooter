@@ -8,22 +8,30 @@ from src.scenes.loose_scene import LooseScene
 
 class GameManager(object):
     levels = []
+    level_classes = []
     started = False
     current_level = 0
 
     @classmethod
     def init(self):
         cocos.director.director.init()
-        self.levels = [ MainMenuScene() ]
+
+        self.level_classes = []
+        self.level_classes.append(MainMenuScene)
 
     @classmethod
-    def add_level(self, level):
-        self.levels.append(level)
+    def add_level(self, level_class):
+        self.level_classes.append(level_class)
 
     @classmethod
     def start(self):
-        self.levels.append(WinScene())
+        self.level_classes.append(WinScene)
+        self.load_levels()
         self.next_level()
+
+    @classmethod
+    def load_levels(self):
+        self.levels = [ level() for level in self.level_classes ]
 
     @classmethod
     def next_level(self):
@@ -39,8 +47,15 @@ class GameManager(object):
 
     @classmethod
     def restart(self):
-        self.current_level = 0
+        self.load_levels()
+        self.current_level = 1
         level = self.levels[self.current_level]
+        print("restart", level)
+        cocos.director.director.run(level)
+
+    @classmethod
+    def loose(self):
+        level = LooseScene()
         cocos.director.director.replace(FadeTRTransition(level, duration=1))
 
     @classmethod
