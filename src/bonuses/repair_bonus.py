@@ -19,6 +19,6 @@ class RepairBonus(Bonus):
         """
 
         if player.health >= player.max_health:
-            player.max_health += random.randrange(1, 10) * randrange(1, 5) * 10
+            player.max_health += random.randrange(1, 10) * random.randrange(1, 5) * 10
 
         player.health = player.max_health

@@ -47,7 +47,7 @@ class GameManager(object):
         else:
             player = None
 
-            if self.current_level > 0 and self.current_level < len(self.levels) - 1:
+            if self.current_level > 0 and self.current_level < len(self.levels) - 2:
                 player = self.levels[self.current_level].get_player()
 
             self.current_level += 1

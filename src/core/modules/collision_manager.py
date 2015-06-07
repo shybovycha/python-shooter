@@ -6,32 +6,32 @@ class CollisionManager(object):
     entities = []
 
     @classmethod
-    def register(self, entity):
+    def register(cls, entity):
         """
             Add entity to be handled by collision manager.
         """
 
-        self.entities.append(entity)
+        cls.entities.append(entity)
 
     @classmethod
-    def unregister(self, entity):
+    def unregister(cls, entity):
         """
             Remove entity from collisions managing.
         """
 
-        if entity in self.entities:
-            self.entities.remove(entity)
+        if entity in cls.entities:
+            cls.entities.remove(entity)
 
     @classmethod
-    def update(self):
+    def update(cls):
         """
             Handles collisions between **different** entities.
             E. g., we entity can not collide with itself.
             Collision handler will be called on both entities collided.
         """
 
-        for entity1 in self.entities:
-            for entity2 in self.entities:
+        for entity1 in cls.entities:
+            for entity2 in cls.entities:
                 if entity1 == entity2:
                     continue
 

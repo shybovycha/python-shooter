@@ -1,7 +1,5 @@
 import cocos
 
-from cocos.text import Label
-
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
 from src.core.modules.collision_manager import CollisionManager
@@ -34,7 +32,7 @@ class PlayerLayer(cocos.layer.Layer):
 
         _missles = self.player.alive_missles()
         padding = 80
-        screen_width, screen_height = Sprite.window_size()
+        screen_width, _ = Sprite.window_size()
 
         for missle in _missles:
             if missle.get_x() > screen_width + padding or missle.get_x() < 0:

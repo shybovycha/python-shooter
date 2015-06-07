@@ -10,7 +10,7 @@ class Player(ShootingSprite, EventDispatcher):
         Represents player, the Space Hero.
     """
 
-    SERIALIZABLE_PARAMS = [ 'health', 'max_health', 'armor', 'missle_damage', 'score' ]
+    SERIALIZABLE_PARAMS = ['health', 'max_health', 'armor', 'missle_damage', 'score']
 
     def __init__(self, image=None):
         if image is None:
@@ -32,7 +32,7 @@ class Player(ShootingSprite, EventDispatcher):
             Returns params needed for restore
         """
 
-        return { key: getattr(self, key) for key in Player.SERIALIZABLE_PARAMS }
+        return {key: getattr(self, key) for key in Player.SERIALIZABLE_PARAMS}
 
     def set_params(self, params):
         """
@@ -57,7 +57,7 @@ class Player(ShootingSprite, EventDispatcher):
         self.dispatch_event('on_player_hit', self)
 
         if isinstance(entity, Enemy):
-           self.take_damage(entity.hit_damage)
+            self.take_damage(entity.hit_damage)
 
         if isinstance(entity, Missle) and not isinstance(entity.owner, Player):
             self.take_damage(entity.hit_damage)

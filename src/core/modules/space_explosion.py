@@ -7,12 +7,12 @@ class SpaceExplosion(ParticleSystem):
         the explosion in a space
     """
 
-    def rgb2color(r, g, b, a = 255.0):
+    def rgb2color(red, green, blue, alpha=255.0):
         """
             Utilizes some helper methods for particle systems.
         """
 
-        return Color(r / 255.0, g / 255.0, b / 255.0, a / 255.0)
+        return Color(red / 255.0, green / 255.0, blue / 255.0, alpha / 255.0)
 
     # total particle
     total_particles = 700

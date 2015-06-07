@@ -24,13 +24,23 @@ class StatusBarLayer(cocos.layer.Layer):
         self.set_player_state(player)
 
     def set_wave(self, wave, waves_cnt):
+        """
+            Updates wave status bar item
+        """
+
         wave_str = "WAVE {0}/{1}".format(wave, waves_cnt)
         self.wave_label.element.text = wave_str
 
     def set_player_state(self, player):
+        """
+            Updates player' health and armor status bar items
+        """
+
         health_str = "HP {0}/{1}".format(int(player.health), int(player.max_health))
         self.health_label.element.text = health_str
 
         if player.armor is not None:
-            armor_str = "ARMOR {0}/{1}".format(int(player.armor.health), int(player.armor.max_health))
+            armor_hp = int(player.armor.health)
+            max_armor_hp = int(player.armor.max_health)
+            armor_str = "ARMOR {0}/{1}".format(armor_hp, max_armor_hp)
             self.armor_label.element.text = armor_str

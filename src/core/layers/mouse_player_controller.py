@@ -1,9 +1,5 @@
-import cocos
-
 from pyglet.window import mouse
 
-from src.core.modules.player import Player
-from src.core.modules.collision_manager import CollisionManager
 from src.core.layers.player_layer import PlayerLayer
 
 class MousePlayerController(PlayerLayer):
@@ -36,7 +32,3 @@ class MousePlayerController(PlayerLayer):
 
         if buttons & mouse.LEFT:
             self.player.shoot()
-
-        if buttons & mouse.RIGHT:
-            # MEGA-shoot!
-            pass

@@ -4,6 +4,10 @@ from src.core.modules.parallax_layer import ParallaxLayer
 from src.core.modules.resource_manager import ResourceManager
 
 class BackgroundLayer(cocos.layer.Layer):
+    """
+        Parallax background
+    """
+
     is_event_handler = True
 
     def __init__(self, image=None):
@@ -18,4 +22,8 @@ class BackgroundLayer(cocos.layer.Layer):
         self.add(self.parallax_layer.bg_img2.sprite)
 
     def _step(self, delta_time):
+        """
+            Handle parallax effect each timer tick
+        """
+
         self.parallax_layer.shift_background(delta_time)

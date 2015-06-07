@@ -2,10 +2,9 @@ import cocos
 
 from pyglet.event import EventDispatcher
 
-from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay, CallFunc
+from cocos.actions import ScaleTo, FadeIn, FadeOut, Delay, CallFunc
 from cocos.layer.base_layers import Layer
 
-from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
 from src.core.modules.collision_manager import CollisionManager
 
@@ -38,7 +37,7 @@ class EnemyLayer(Layer, EventDispatcher):
             Generates set of labels for countdown timer
         """
 
-        numbers = [ str(i) for i in reversed(range(1, self.wave_delay + 1)) ]
+        numbers = [str(i) for i in reversed(range(1, self.wave_delay + 1))]
         self.countdown_texts = ["Get ready!"]
         self.countdown_texts.extend(numbers)
         self.countdown_texts.append("Let's rock!")
@@ -96,7 +95,7 @@ class EnemyLayer(Layer, EventDispatcher):
             Checks if this level is done.
         """
 
-        return (self.current_wave is not None and self.current_wave >= len(self.waves))
+        return self.current_wave is not None and self.current_wave >= len(self.waves)
 
     def deploy_enemies(self):
         """
@@ -174,7 +173,8 @@ class EnemyLayer(Layer, EventDispatcher):
         if self.is_started and self.is_enemies_deployed and not self.has_enemies():
             if self.current_wave >= len(self.waves) - 1 and not self.next_level_notified:
                 self.next_level_notified = True
-                goto_next_level = Delay(2) + CallFunc(src.core.modules.game_manager.GameManager.next_level)
+                next_level_func = src.core.modules.game_manager.GameManager.next_level
+                goto_next_level = Delay(2) + CallFunc(next_level_func)
                 self.parent.do(goto_next_level)
             else:
                 if not self.is_next_wave_notified:
@@ -189,7 +189,7 @@ class EnemyLayer(Layer, EventDispatcher):
         _enemies = self.alive_enemies()
         _missles = self.missles()
 
-        screen_width, screen_height = Sprite.window_size()
+        screen_width, _ = Sprite.window_size()
 
         for enemy in _enemies:
             enemy.update(delta_time)
