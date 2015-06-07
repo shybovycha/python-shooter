@@ -24,7 +24,7 @@ class EnemyLayer(Layer, EventDispatcher):
 
         self.waves = []
         self.current_wave = None
-        self.wave_delay = 1
+        self.wave_delay = 3
         self.countdown_label = None
         self.countdown_texts = []
         self.is_started = False
@@ -82,20 +82,14 @@ class EnemyLayer(Layer, EventDispatcher):
         result = sum([enemy.missles for enemy in self.enemies()], [])
         return [missle for missle in result if missle.is_alive()]
 
-    def on_enemy_died(self, enemy):
+    def register_bonus(self, bonus):
         """
-            Gets all the bonuses, thrown out of dead enemy.
+            Tracks single bonus dropped
         """
 
-        _bonuses = enemy.bonus_classes
-        _position = enemy.get_position()
-
-        for bonus_class in _bonuses:
-            bonus = bonus_class(_position)
-
-            self.bonuses.append(bonus)
-            self.add(bonus.sprite)
-            CollisionManager.register(bonus)
+        self.add(bonus.sprite)
+        self.bonuses.append(bonus)
+        CollisionManager.register(bonus)
 
     def is_done(self):
         """

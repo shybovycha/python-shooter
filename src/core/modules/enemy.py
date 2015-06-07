@@ -65,14 +65,16 @@ class Enemy(ShootingSprite):
             Returns all the bonuses it has.
         """
 
+        if self.was_destroyed:
+            return
+
         for bonus_class in self.bonus_classes:
             sx, sy = self.get_position()
             rx, ry = random.randrange(10, 50), random.randrange(10, 50)
             position = (sx + rx, sy + ry)
             bonus = bonus_class(position=position)
             layer = self.sprite.parent
-            layer.add(bonus.sprite)
-            CollisionManager.register(bonus)
+            layer.register_bonus(bonus)
 
     def die(self):
         """

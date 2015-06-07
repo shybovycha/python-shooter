@@ -13,6 +13,7 @@ class DestroyableParticleSystem(CollidableParticleSystem, DestroyableEntity):
         DestroyableEntity.__init__(self, self.radius)
 
         self.detonate = False
+        self.was_destroyed = False
 
     def die(self):
         """
@@ -20,5 +21,10 @@ class DestroyableParticleSystem(CollidableParticleSystem, DestroyableEntity):
             entity from a layer and create an awesome explosion FX!
         """
 
+        if self.was_destroyed:
+            return
+
         DestroyableEntity.die(self)
         self.kill()
+
+        self.was_destroyed = True

@@ -13,8 +13,8 @@ class StatusBarLayer(cocos.layer.Layer):
         super(StatusBarLayer, self).__init__()
 
         self.health_label = Label("", position=(10, 10), font_size=10)
-        self.armor_label = Label("", position=(100, 10), font_size=10)
-        self.wave_label = Label("", position=(200, 10), font_size=10)
+        self.armor_label = Label("", position=(150, 10), font_size=10)
+        self.wave_label = Label("", position=(300, 10), font_size=10)
 
         self.add(self.wave_label)
         self.add(self.armor_label)
@@ -28,9 +28,9 @@ class StatusBarLayer(cocos.layer.Layer):
         self.wave_label.element.text = wave_str
 
     def set_player_state(self, player):
-        health_str = "HP {0}/{1}".format(player.health, player.max_health)
+        health_str = "HP {0}/{1}".format(int(player.health), int(player.max_health))
         self.health_label.element.text = health_str
 
         if player.armor is not None:
-            health_str = "ARMOR {0}/{1}".format(player.armor.health, player.armor.max_health)
-            self.health_label.element.text = health_str
+            armor_str = "ARMOR {0}/{1}".format(int(player.armor.health), int(player.armor.max_health))
+            self.armor_label.element.text = armor_str

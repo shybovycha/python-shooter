@@ -52,17 +52,15 @@ class Player(ShootingSprite, EventDispatcher):
             * when entity is a missle - player takes damage
             * when entity is a bonus - player picks it up and bonus "dies"
             * when entity is an enemy - player takes huge damage; enemy too
-
-            TODO: implement bonus hits player
         """
+
+        self.dispatch_event('on_player_hit', self)
 
         if isinstance(entity, Enemy):
            self.take_damage(entity.hit_damage)
 
         if isinstance(entity, Missle) and not isinstance(entity.owner, Player):
             self.take_damage(entity.hit_damage)
-
-        self.dispatch_event('on_player_hit', self)
 
     def gain_score_points(self, points_gained):
         """
