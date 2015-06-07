@@ -29,7 +29,7 @@ class Missle(DestroyableEntity):
             return
 
         entity.take_damage(self.hit_damage)
-        self.die(detonate=False)
+        self.die()
 
     def update(self, delta_time=1.0):
         """

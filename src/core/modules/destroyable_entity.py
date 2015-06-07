@@ -1,5 +1,6 @@
 from src.core.modules.collidable_entity import CollidableEntity
 from src.core.modules.collision_manager import CollisionManager
+from src.core.modules.space_explosion import SpaceExplosion
 
 class DestroyableEntity(CollidableEntity):
     """
@@ -13,6 +14,7 @@ class DestroyableEntity(CollidableEntity):
         self.health = 1
         self.hit_damage = 0
         self.armor = None
+        self.detonate = False
 
     def die(self):
         """
@@ -22,6 +24,12 @@ class DestroyableEntity(CollidableEntity):
         self.health = 0
 
         CollisionManager.unregister(self)
+
+        if self.detonate:
+            layer = self.sprite.parent
+            explosion = SpaceExplosion()
+            explosion.position = self.get_position()
+            layer.add(explosion)
 
     def is_alive(self):
         """

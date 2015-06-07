@@ -38,6 +38,6 @@ class PlayerLayer(cocos.layer.Layer):
 
         for missle in _missles:
             if missle.get_x() > screen_width + padding or missle.get_x() < 0:
-                missle.die(detonate=False)
+                missle.die()
 
             missle.update(delta_time)

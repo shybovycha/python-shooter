@@ -1,7 +1,9 @@
 from src.core.modules.sprite import Sprite
 
 class ParallaxLayer(object):
-    """Class representing any background, scrolled in time. Endless scrolling..."""
+    """
+        Class representing any background, scrolled in time. Endless scrolling...
+    """
 
     def __init__(self, image_path):
         self.bg_img1 = Sprite(image_path)
@@ -12,7 +14,9 @@ class ParallaxLayer(object):
         self.bg_img2.set_y(self.bg_img2.height() / 2)
 
     def shift_background(self, delta_time=1.0):
-        """This method is something like onTimer handler."""
+        """
+            This method is something like onTimer handler.
+        """
 
         scroll_speed = 6.0
         delta = scroll_speed * 0.3 * int(delta_time * 100)

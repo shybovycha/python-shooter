@@ -3,6 +3,10 @@ from src.core.modules.shooting_sprite import ShootingSprite
 from src.core.modules.missle import Missle
 
 class Enemy(ShootingSprite):
+    """
+        Base class for enemies.
+    """
+
     def __init__(self, image=None):
         if image is None:
             image = ResourceManager.get_enemy_image()
@@ -12,8 +16,15 @@ class Enemy(ShootingSprite):
         self.hit_damage = 100
         self.missle_direction = -1
         self.movement_speed = 3.0
+        self.bonus_classes = []
+        self.bonuses = []
+        self.detonate = True
 
     def update(self, delta_time=1.0):
+        """
+            Here all the intelligence hides.
+        """
+
         if not self.is_alive():
             self.die()
             return
@@ -21,11 +32,20 @@ class Enemy(ShootingSprite):
         self.move()
 
     def move(self, delta_time=1.0):
+        """
+            This method simply moves enemy along the level,
+            towards player.
+        """
+
         delta = self.movement_speed * 0.3 * int(delta_time)
 
         self.set_x(self.get_x() - delta)
 
     def on_hit_entity(self, other):
+        """
+            Default collision handler: take damage, die if needed.
+        """
+
         if type(self) == type(other) or (type(other).__name__ == 'PlasmaBall' and type(self) == type(other.owner)):
             return
 
@@ -33,3 +53,17 @@ class Enemy(ShootingSprite):
 
         if not self.is_alive():
             self.die()
+
+    def die(self):
+        """
+            Override `die` method to throw out all the bonuses!
+        """
+
+        ShootingSprite.die(self)
+
+        self.bonuses = []
+
+        for bonus_class in self.bonus_classes:
+            bonus = bonus_class(position=self.get_position())
+
+            self.bonuses.append(bonus)

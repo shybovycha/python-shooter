@@ -31,6 +31,7 @@ class EnemyLayer(Layer, EventDispatcher):
         self.is_next_wave_notified = False
         self.is_enemies_deployed = False
         self.next_level_notified = False
+        self.detonate = False
 
     def generate_countdown_texts(self):
         numbers = [ str(i) for i in reversed(range(1, self.wave_delay + 1)) ]
@@ -72,6 +73,14 @@ class EnemyLayer(Layer, EventDispatcher):
 
         result = sum([enemy.missles for enemy in self.enemies()], [])
         return [missle for missle in result if missle.is_alive()]
+
+    def bonuses(self):
+        """
+            Returns all the bonuses, thrown out of dead enemies.
+        """
+
+        result = sum([enemy.bonuses for enemy in self.enemies()], [])
+        return [bonus for bonus in result if bonus.is_alive()]
 
     def is_done(self):
         """
@@ -166,6 +175,7 @@ class EnemyLayer(Layer, EventDispatcher):
 
         _enemies = self.alive_enemies()
         _missles = self.missles()
+        _bonuses = self.bonuses()
 
         screen_width, screen_height = Sprite.window_size()
 
@@ -176,6 +186,12 @@ class EnemyLayer(Layer, EventDispatcher):
             missle.update(delta_time)
 
             if missle.get_x() < 0 or missle.get_x() > screen_width:
-                missle.die(detonate=False)
+                missle.die()
+
+        for bonus in _bonuses:
+            bonus.update(delta_time)
+
+            if bonus.get_x() < 0 or bonus.get_x() > screen_width:
+                bonus.die()
 
 EnemyLayer.register_event_type('on_next_wave')

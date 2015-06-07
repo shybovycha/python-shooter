@@ -1,6 +1,15 @@
 class ScoreManager(object):
+    """
+        This is useless class for tracking some points.
+    """
+
     @staticmethod
     def get_enemy_score(enemy):
+        """
+            Returns amount of points, gained by a player
+            for destroying each particular enemy.
+        """
+
         return enemy.health / 10
 
     @staticmethod

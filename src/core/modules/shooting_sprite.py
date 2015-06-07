@@ -3,6 +3,10 @@ from src.core.modules.plasma_ball import PlasmaBall
 from src.core.modules.collision_manager import CollisionManager
 
 class ShootingSprite(DestroyableSprite):
+    """
+        Represents sprite which could shot you down.
+    """
+
     def __init__(self, image_path, position=(0, 0), rotation=0, bound_to_window=False):
         super(ShootingSprite, self).__init__(image_path, position, rotation, bound_to_window)
 
@@ -12,6 +16,10 @@ class ShootingSprite(DestroyableSprite):
         self.missle_direction = 1
 
     def shoot(self):
+        """
+            The most dangerous method.
+        """
+
         missle = PlasmaBall(owner=self,
                             damage=self.missle_damage,
                             speed=self.missle_speed,
@@ -22,4 +30,8 @@ class ShootingSprite(DestroyableSprite):
         CollisionManager.register(missle)
 
     def alive_missles(self):
+        """
+            All missles, which did not reach their target yet.
+        """
+
         return filter(lambda missle: missle.is_alive(), self.missles)

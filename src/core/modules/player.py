@@ -23,6 +23,7 @@ class Player(ShootingSprite, EventDispatcher):
         self.missle_damage = 10
         self.hit_damage = 100
         self.score = 0
+        self.detonate = True
 
     def on_hit_entity(self, entity):
         """

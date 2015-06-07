@@ -12,17 +12,13 @@ class DestroyableParticleSystem(CollidableParticleSystem, DestroyableEntity):
         CollidableParticleSystem.__init__(self, radius)
         DestroyableEntity.__init__(self, self.radius)
 
-    def die(self, detonate=True):
+        self.detonate = False
+
+    def die(self):
         """
             Extend default `die` method to remove the correct
             entity from a layer and create an awesome explosion FX!
         """
-
-        if detonate:
-            layer = self.parent
-            explosion = SpaceExplosion()
-            explosion.position = self.get_position()
-            layer.add(explosion)
 
         DestroyableEntity.die(self)
         self.kill()

@@ -7,6 +7,10 @@ from src.scenes.win_scene import WinScene
 from src.scenes.loose_scene import LooseScene
 
 class GameManager(object):
+    """
+        Class which manages level transitions and menu displaying.
+    """
+
     levels = []
     level_classes = []
     started = False

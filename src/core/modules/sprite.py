@@ -1,8 +1,17 @@
 import cocos
 
 class Sprite(object):
+    """
+        Base class for almost all the entities you see on the screen.
+    """
+
     @staticmethod
     def window_size():
+        """
+            Helper method. Needed to place sprites in the meaningful
+            places beyond the screen.
+        """
+
         return cocos.director.director.get_window_size()
 
     def __init__(self, image_path, position=(0, 0), rotation=0, bound_to_window=False):

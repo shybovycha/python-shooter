@@ -8,7 +8,7 @@ from src.core.modules.enemy import Enemy
 
 class SimpleBoss(Enemy):
     def __init__(self):
-        image = ResourceManager.get_enemy_image()
+        image = ResourceManager.get_boss_image()
 
         super(SimpleBoss, self).__init__(image)
 
