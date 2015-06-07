@@ -26,11 +26,10 @@ class Bonus(DestroyableSprite):
             Override default collision handling.
         """
 
-        if not isinstance(other, Player):
+        if type(other).__name__ != 'Player':
             return
 
         self.affect(other)
-
         self.die()
 
     def update(self, delta_time):

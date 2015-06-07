@@ -1,11 +1,15 @@
+import random
+
 from pyglet.event import EventDispatcher
+
+from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay, CallFunc
 
 from src.core.modules.resource_manager import ResourceManager
 from src.core.modules.shooting_sprite import ShootingSprite
 from src.core.modules.missle import Missle
 from src.core.modules.collision_manager import CollisionManager
 
-class Enemy(ShootingSprite, EventDispatcher):
+class Enemy(ShootingSprite):
     """
         Base class for enemies.
     """
@@ -15,7 +19,6 @@ class Enemy(ShootingSprite, EventDispatcher):
             image = ResourceManager.get_enemy_image()
 
         ShootingSprite.__init__(self, image, rotation=-90)
-        EventDispatcher.__init__(self)
 
         self.hit_damage = 100
         self.missle_direction = -1
@@ -29,6 +32,7 @@ class Enemy(ShootingSprite, EventDispatcher):
         """
 
         if not self.is_alive():
+            self.die()
             return
 
         self.move()
@@ -62,7 +66,10 @@ class Enemy(ShootingSprite, EventDispatcher):
         """
 
         for bonus_class in self.bonus_classes:
-            bonus = bonus_class(position=self.get_position())
+            sx, sy = self.get_position()
+            rx, ry = random.randrange(10, 50), random.randrange(10, 50)
+            position = (sx + rx, sy + ry)
+            bonus = bonus_class(position=position)
             layer = self.sprite.parent
             layer.add(bonus.sprite)
             CollisionManager.register(bonus)
@@ -75,7 +82,3 @@ class Enemy(ShootingSprite, EventDispatcher):
         self.drop_bonuses()
 
         ShootingSprite.die(self)
-
-        # self.dispatch_event('on_enemy_died', self)
-
-Enemy.register_event_type('on_enemy_died')

@@ -24,7 +24,7 @@ class EnemyLayer(Layer, EventDispatcher):
 
         self.waves = []
         self.current_wave = None
-        self.wave_delay = 5
+        self.wave_delay = 1
         self.countdown_label = None
         self.countdown_texts = []
         self.is_started = False
@@ -116,7 +116,6 @@ class EnemyLayer(Layer, EventDispatcher):
 
         for enemy in self.enemies():
             self.add(enemy.sprite)
-            enemy.push_handlers(self)
 
             CollisionManager.register(enemy)
 
