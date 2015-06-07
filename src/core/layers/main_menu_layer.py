@@ -1,7 +1,6 @@
 import cocos
 
 from cocos.menu import MenuItem, Menu
-from cocos.text import Label
 
 import src.core.modules.game_manager
 
