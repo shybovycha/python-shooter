@@ -48,6 +48,6 @@ class SimpleBoss(Enemy):
         if self.tau > math.pi * 2:
             self.tau = 0
 
-        dy = math.sin(self.tau) * 70
+        dy = math.sin(self.tau) * 150
 
         self.set_y(self.start_y + dy)

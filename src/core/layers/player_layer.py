@@ -1,5 +1,7 @@
 import cocos
 
+from cocos.text import Label
+
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
 from src.core.modules.collision_manager import CollisionManager

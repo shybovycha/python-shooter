@@ -3,6 +3,7 @@ import cocos
 from src.core.layers.background_layer import BackgroundLayer
 from src.core.layers.mouse_player_controller import MousePlayerController
 from src.core.layers.enemy_layer import EnemyLayer
+from src.core.layers.status_bar_layer import StatusBarLayer
 
 class BaseScene(cocos.scene.Scene):
     """
@@ -17,6 +18,7 @@ class BaseScene(cocos.scene.Scene):
         self.background_layer = None
         self.player_layer = None
         self.enemies_layer = None
+        self.status_bar_layer = None
 
     def on_enter(self):
         """
@@ -28,6 +30,7 @@ class BaseScene(cocos.scene.Scene):
         self.load_map()
         self.load_players()
         self.load_enemies()
+        self.load_status_bar()
 
         self.enemies_layer.next_wave()
 
@@ -45,6 +48,7 @@ class BaseScene(cocos.scene.Scene):
         """
 
         self.player_layer = MousePlayerController()
+        self.player_layer.player.push_handlers(self)
         self.add(self.player_layer)
 
     def load_enemies(self):
@@ -54,7 +58,30 @@ class BaseScene(cocos.scene.Scene):
 
         self.enemies_layer = EnemyLayer()
         self.enemies_layer.set_enemy_waves(self.enemy_waves())
+        self.enemies_layer.push_handlers(self)
         self.add(self.enemies_layer)
+
+    def load_status_bar(self):
+        """
+            Loads the status bar layer.
+        """
+
+        self.status_bar_layer = StatusBarLayer(self.player_layer.player)
+        self.add(self.status_bar_layer)
+
+    def on_next_wave(self, wave_index, waves_cnt):
+        """
+            Handles 'next_wave' event.
+        """
+
+        self.status_bar_layer.set_wave(wave_index, waves_cnt)
+
+    def on_player_hit(self, player):
+        """
+            Handles 'player.on_hit' event.
+        """
+
+        self.status_bar_layer.set_player_state(player)
 
     def enemy_waves(self):
         """

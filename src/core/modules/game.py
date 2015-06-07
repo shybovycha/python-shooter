@@ -7,7 +7,7 @@ class Game(object):
     @classmethod
     def start(self):
         GameManager.init()
-        # GameManager.add_level(Level1)
-        # GameManager.add_level(Level2)
+        GameManager.add_level(Level1)
+        GameManager.add_level(Level2)
         GameManager.add_level(Level3)
         GameManager.start()

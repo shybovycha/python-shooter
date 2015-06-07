@@ -1,6 +1,9 @@
 import cocos
 
+from pyglet.event import EventDispatcher
+
 from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay, CallFunc
+from cocos.layer.base_layers import Layer
 
 from src.core.modules.player import Player
 from src.core.modules.sprite import Sprite
@@ -8,7 +11,7 @@ from src.core.modules.collision_manager import CollisionManager
 
 import src.core.modules.game_manager
 
-class EnemyLayer(cocos.layer.base_layers.Layer):
+class EnemyLayer(Layer, EventDispatcher):
     """
         Layer, containing and controlling enemies.
     """
@@ -16,7 +19,8 @@ class EnemyLayer(cocos.layer.base_layers.Layer):
     is_event_handler = True
 
     def __init__(self):
-        super(EnemyLayer, self).__init__()
+        Layer.__init__(self)
+        EventDispatcher.__init__(self)
 
         self.waves = []
         self.current_wave = None
@@ -88,6 +92,7 @@ class EnemyLayer(cocos.layer.base_layers.Layer):
             CollisionManager.register(enemy)
 
         self.is_enemies_deployed = True
+        self.dispatch_event('on_next_wave', self.current_wave + 1, len(self.waves))
 
     def update_countdown_label(self):
         """
@@ -172,3 +177,5 @@ class EnemyLayer(cocos.layer.base_layers.Layer):
 
             if missle.get_x() < 0 or missle.get_x() > screen_width:
                 missle.die(detonate=False)
+
+EnemyLayer.register_event_type('on_next_wave')
