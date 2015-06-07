@@ -1,8 +1,11 @@
+from pyglet.event import EventDispatcher
+
 from src.core.modules.resource_manager import ResourceManager
 from src.core.modules.shooting_sprite import ShootingSprite
 from src.core.modules.missle import Missle
+from src.core.modules.collision_manager import CollisionManager
 
-class Enemy(ShootingSprite):
+class Enemy(ShootingSprite, EventDispatcher):
     """
         Base class for enemies.
     """
@@ -11,13 +14,13 @@ class Enemy(ShootingSprite):
         if image is None:
             image = ResourceManager.get_enemy_image()
 
-        super(Enemy, self).__init__(image, rotation=-90)
+        ShootingSprite.__init__(self, image, rotation=-90)
+        EventDispatcher.__init__(self)
 
         self.hit_damage = 100
         self.missle_direction = -1
         self.movement_speed = 3.0
         self.bonus_classes = []
-        self.bonuses = []
         self.detonate = True
 
     def update(self, delta_time=1.0):
@@ -26,7 +29,6 @@ class Enemy(ShootingSprite):
         """
 
         if not self.is_alive():
-            self.die()
             return
 
         self.move()
@@ -54,16 +56,26 @@ class Enemy(ShootingSprite):
         if not self.is_alive():
             self.die()
 
+    def drop_bonuses(self):
+        """
+            Returns all the bonuses it has.
+        """
+
+        for bonus_class in self.bonus_classes:
+            bonus = bonus_class(position=self.get_position())
+            layer = self.sprite.parent
+            layer.add(bonus.sprite)
+            CollisionManager.register(bonus)
+
     def die(self):
         """
             Override `die` method to throw out all the bonuses!
         """
 
+        self.drop_bonuses()
+
         ShootingSprite.die(self)
 
-        self.bonuses = []
+        # self.dispatch_event('on_enemy_died', self)
 
-        for bonus_class in self.bonus_classes:
-            bonus = bonus_class(position=self.get_position())
-
-            self.bonuses.append(bonus)
+Enemy.register_event_type('on_enemy_died')

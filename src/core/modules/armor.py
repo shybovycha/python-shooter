@@ -16,5 +16,5 @@ class Armor(object):
         """
 
         delta = min(self.health, damage) * self.absorb_coeff
-        self.health -= delta
+        self.health = int(self.health - delta)
         return 1.0 - delta

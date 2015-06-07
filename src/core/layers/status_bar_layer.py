@@ -12,9 +12,9 @@ class StatusBarLayer(cocos.layer.Layer):
     def __init__(self, player, waves_cnt=0):
         super(StatusBarLayer, self).__init__()
 
-        self.health_label = Label("", position=(10, 10), font_size=20)
-        self.armor_label = Label("", position=(100, 10), font_size=20)
-        self.wave_label = Label("", position=(200, 10), font_size=20)
+        self.health_label = Label("", position=(10, 10), font_size=10)
+        self.armor_label = Label("", position=(100, 10), font_size=10)
+        self.wave_label = Label("", position=(200, 10), font_size=10)
 
         self.add(self.wave_label)
         self.add(self.armor_label)

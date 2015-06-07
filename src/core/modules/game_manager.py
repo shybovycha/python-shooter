@@ -45,8 +45,17 @@ class GameManager(object):
             level = self.levels[self.current_level]
             cocos.director.director.run(level)
         else:
+            player = None
+
+            if self.current_level > 0 and self.current_level < len(self.levels) - 1:
+                player = self.levels[self.current_level].get_player()
+
             self.current_level += 1
             level = self.levels[self.current_level]
+
+            if player is not None:
+                level.set_player(player)
+
             cocos.director.director.replace(level)
 
     @classmethod

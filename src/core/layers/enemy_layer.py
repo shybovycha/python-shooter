@@ -31,15 +31,23 @@ class EnemyLayer(Layer, EventDispatcher):
         self.is_next_wave_notified = False
         self.is_enemies_deployed = False
         self.next_level_notified = False
-        self.detonate = False
+        self.bonuses = []
 
     def generate_countdown_texts(self):
+        """
+            Generates set of labels for countdown timer
+        """
+
         numbers = [ str(i) for i in reversed(range(1, self.wave_delay + 1)) ]
         self.countdown_texts = ["Get ready!"]
         self.countdown_texts.extend(numbers)
         self.countdown_texts.append("Let's rock!")
 
     def set_enemy_waves(self, waves):
+        """
+            Sets enemy waves
+        """
+
         self.waves = waves
 
     def has_enemies(self):
@@ -74,13 +82,20 @@ class EnemyLayer(Layer, EventDispatcher):
         result = sum([enemy.missles for enemy in self.enemies()], [])
         return [missle for missle in result if missle.is_alive()]
 
-    def bonuses(self):
+    def on_enemy_died(self, enemy):
         """
-            Returns all the bonuses, thrown out of dead enemies.
+            Gets all the bonuses, thrown out of dead enemy.
         """
 
-        result = sum([enemy.bonuses for enemy in self.enemies()], [])
-        return [bonus for bonus in result if bonus.is_alive()]
+        _bonuses = enemy.bonus_classes
+        _position = enemy.get_position()
+
+        for bonus_class in _bonuses:
+            bonus = bonus_class(_position)
+
+            self.bonuses.append(bonus)
+            self.add(bonus.sprite)
+            CollisionManager.register(bonus)
 
     def is_done(self):
         """
@@ -90,6 +105,10 @@ class EnemyLayer(Layer, EventDispatcher):
         return (self.current_wave is not None and self.current_wave >= len(self.waves))
 
     def deploy_enemies(self):
+        """
+            Creates sprites of all the enemies in the current wave
+        """
+
         if self.current_wave is None:
             self.current_wave = 0
         else:
@@ -97,6 +116,7 @@ class EnemyLayer(Layer, EventDispatcher):
 
         for enemy in self.enemies():
             self.add(enemy.sprite)
+            enemy.push_handlers(self)
 
             CollisionManager.register(enemy)
 
@@ -175,7 +195,6 @@ class EnemyLayer(Layer, EventDispatcher):
 
         _enemies = self.alive_enemies()
         _missles = self.missles()
-        _bonuses = self.bonuses()
 
         screen_width, screen_height = Sprite.window_size()
 
@@ -188,7 +207,7 @@ class EnemyLayer(Layer, EventDispatcher):
             if missle.get_x() < 0 or missle.get_x() > screen_width:
                 missle.die()
 
-        for bonus in _bonuses:
+        for bonus in self.bonuses:
             bonus.update(delta_time)
 
             if bonus.get_x() < 0 or bonus.get_x() > screen_width:

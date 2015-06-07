@@ -12,11 +12,18 @@ class DestroyableSprite(CollidableSprite, DestroyableEntity):
         CollidableSprite.__init__(self, image_path, position, rotation, bound_to_window)
         DestroyableEntity.__init__(self, self.radius)
 
+        self.was_destroyed = False
+
     def die(self):
         """
             Extend default `die` method to remove the correct
             entity from a layer and create an awesome explosion FX!
         """
 
+        if self.was_destroyed:
+            return
+
         DestroyableEntity.die(self)
         self.sprite.kill()
+
+        self.was_destroyed = True

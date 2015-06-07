@@ -19,6 +19,7 @@ class BaseScene(cocos.scene.Scene):
         self.player_layer = None
         self.enemies_layer = None
         self.status_bar_layer = None
+        self.saved_player = None
 
     def on_enter(self):
         """
@@ -50,6 +51,23 @@ class BaseScene(cocos.scene.Scene):
         self.player_layer = MousePlayerController()
         self.player_layer.player.push_handlers(self)
         self.add(self.player_layer)
+
+        if self.saved_player is not None:
+            self.player_layer.player.set_params(self.saved_player)
+
+    def get_player(self):
+        """
+            Returns player
+        """
+
+        return self.player_layer.player.get_params()
+
+    def set_player(self, player_params):
+        """
+            Sets new player. Used to restore player on level transition
+        """
+
+        self.saved_player = player_params
 
     def load_enemies(self):
         """

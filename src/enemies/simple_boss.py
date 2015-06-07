@@ -25,7 +25,7 @@ class SimpleBoss(Enemy):
 
     def update(self, delta_time=1.0):
         if not self.is_alive():
-            self.die()
+            #self.die()
             return
 
         self.move()

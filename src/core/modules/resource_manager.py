@@ -36,3 +36,27 @@ class ResourceManager(object):
         """
 
         return 'resources/backgrounds/space%d.png' % random.randint(1, 1)
+
+    @staticmethod
+    def get_repair_bonus_image():
+        """
+            Get repair bonus image
+        """
+
+        return 'resources/bonuses/health1.gif'
+
+    @staticmethod
+    def get_damage_bonus_image():
+        """
+            Get damage bonus image
+        """
+
+        return 'resources/bonuses/gun5.png'
+
+    @staticmethod
+    def get_armor_bonus_image():
+        """
+            Get armor bonus image
+        """
+
+        return 'resources/bonuses/armor4.png'
