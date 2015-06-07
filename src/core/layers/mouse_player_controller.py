@@ -25,7 +25,7 @@ class MousePlayerController(PlayerLayer):
         self.on_mouse_motion(x, y, dx, dy)
         self.on_mouse_press(x, y, buttons, modifiers)
 
-    def on_mouse_press(self, x, y, buttons, _modifiers):
+    def on_mouse_press(self, _x, _y, buttons, _modifiers):
         """
             Shooting. Just shooting.
         """

@@ -1,5 +1,3 @@
-import cocos
-
 from src.core.modules.base_scene import BaseScene
 from src.enemies.simple_boss import SimpleBoss
 from src.core.modules.sprite import Sprite
@@ -17,7 +15,7 @@ class Level3(BaseScene):
         boss.health = 1500
         boss.set_position(window_width + 50, window_height / 2)
 
-        wave1 = [ boss ]
+        wave1 = [boss]
         waves.append(wave1)
 
         return waves

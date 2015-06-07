@@ -1,13 +1,8 @@
 import random
 
-from pyglet.event import EventDispatcher
-
-from cocos.actions import ScaleBy, ScaleTo, FadeIn, FadeOut, Delay, CallFunc
-
 from src.core.modules.resource_manager import ResourceManager
 from src.core.modules.shooting_sprite import ShootingSprite
-from src.core.modules.missle import Missle
-from src.core.modules.collision_manager import CollisionManager
+from src.core.modules.plasma_ball import PlasmaBall
 
 class Enemy(ShootingSprite):
     """
@@ -52,7 +47,7 @@ class Enemy(ShootingSprite):
             Default collision handler: take damage, die if needed.
         """
 
-        if type(self) == type(other) or (type(other).__name__ == 'PlasmaBall' and type(self) == type(other.owner)):
+        if isinstance(self, type(other)) or (isinstance(other, PlasmaBall) and isinstance(self, type(other.owner))):
             return
 
         self.take_damage(other.hit_damage)

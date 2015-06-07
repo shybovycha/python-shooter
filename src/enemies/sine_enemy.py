@@ -1,11 +1,13 @@
 import math
 
 from src.core.modules.resource_manager import ResourceManager
-from src.core.modules.shooting_sprite import ShootingSprite
-from src.core.modules.missle import Missle
 from src.core.modules.enemy import Enemy
 
 class SineEnemy(Enemy):
+    """
+        Stupid enemy
+    """
+
     def __init__(self):
         image = ResourceManager.get_enemy_image()
 
@@ -17,16 +19,23 @@ class SineEnemy(Enemy):
         self.start_y = None
 
     def update(self, delta_time=1.0):
+        """
+            Only made for moving along a sine wave
+        """
+
         if not self.is_alive():
-            #self.die()
             return
 
         self.move()
 
         if (self.get_y() > 250 or self.get_y() < 50) and int(self.get_y()) % 25 == 0:
-           self.shoot()
+            self.shoot()
 
     def move(self, delta_time=1.0):
+        """
+            Still moving towards player
+        """
+
         super(SineEnemy, self).move(delta_time)
 
         if self.start_y is None:

@@ -13,20 +13,20 @@ class LooseMenuLayer(Menu):
         super(LooseMenuLayer, self).__init__("YOU LOOSE")
 
         menu_items = []
-        menu_items.append(MenuItem('Restart', self.on_restart))
-        menu_items.append(MenuItem('Quit', self.on_quit))
+        menu_items.append(MenuItem('Restart', on_restart))
+        menu_items.append(MenuItem('Quit', on_quit))
         self.create_menu(menu_items, cocos.menu.zoom_in(), cocos.menu.zoom_out())
 
-    def on_restart(self):
-        """
-            Restart game
-        """
+def on_restart():
+    """
+        Restart game
+    """
 
-        src.core.modules.game_manager.GameManager.restart()
+    src.core.modules.game_manager.GameManager.restart()
 
-    def on_quit(self):
-        """
-            Quit game
-        """
+def on_quit():
+    """
+        Quit game
+    """
 
-        src.core.modules.game_manager.GameManager.quit()
+    src.core.modules.game_manager.GameManager.quit()

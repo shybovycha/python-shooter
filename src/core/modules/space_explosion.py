@@ -1,18 +1,18 @@
 from cocos.particle import ParticleSystem, Color
 from cocos.euclid import Point2
 
-class SpaceExplosion(ParticleSystem):
-    """
-        Class representing such a particle system, which simulates
-        the explosion in a space
-    """
-
-    def rgb2color(red, green, blue, alpha=255.0):
+def rgb2color(red, green, blue, alpha=255.0):
         """
             Utilizes some helper methods for particle systems.
         """
 
         return Color(red / 255.0, green / 255.0, blue / 255.0, alpha / 255.0)
+
+class SpaceExplosion(ParticleSystem):
+    """
+        Class representing such a particle system, which simulates
+        the explosion in a space
+    """
 
     # total particle
     total_particles = 700

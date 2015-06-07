@@ -1,5 +1,4 @@
 from src.core.modules.destroyable_sprite import DestroyableSprite
-from src.core.modules.player import Player
 
 class Bonus(DestroyableSprite):
     """

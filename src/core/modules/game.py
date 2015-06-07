@@ -9,7 +9,7 @@ class Game(object):
     """
 
     @classmethod
-    def start(self):
+    def start(cls):
         """
             Init levels.
         """

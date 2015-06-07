@@ -8,7 +8,7 @@ class ShootingSprite(DestroyableSprite):
     """
 
     def __init__(self, image_path, position=(0, 0), rotation=0, bound_to_window=False):
-        super(ShootingSprite, self).__init__(image_path, position, rotation, bound_to_window)
+        DestroyableSprite.__init__(self, image_path, position, rotation, bound_to_window)
 
         self.missles = []
         self.missle_damage = 1
@@ -34,4 +34,4 @@ class ShootingSprite(DestroyableSprite):
             All missles, which did not reach their target yet.
         """
 
-        return filter(lambda missle: missle.is_alive(), self.missles)
+        return [missle for missle in self.missles if missle.is_alive()]

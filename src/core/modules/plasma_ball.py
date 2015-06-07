@@ -1,4 +1,4 @@
-from cocos.particle import ParticleSystem, Color
+from cocos.particle import Color
 from cocos.euclid import Point2
 
 from src.core.modules.destroyable_particle_system import DestroyableParticleSystem
@@ -60,7 +60,7 @@ class PlasmaBall(DestroyableParticleSystem, Missle):
     # color modulate
     color_modulate = True
 
-    def __init__(self, owner=None, damage=1, speed=10, color=Color(0.2, 0.7, 0.7, 1.0), direction=1):
+    def __init__(self, owner=None, damage=1, speed=10, color=Color(0.2,0.7,0.7,1.0), direction=1):
         DestroyableParticleSystem.__init__(self, self.size)
         Missle.__init__(self, self.size, owner, damage, speed, direction)
 

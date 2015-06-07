@@ -1,6 +1,5 @@
 from src.core.modules.destroyable_entity import DestroyableEntity
 from src.core.modules.collidable_particle_system import CollidableParticleSystem
-from src.core.modules.space_explosion import SpaceExplosion
 
 class DestroyableParticleSystem(CollidableParticleSystem, DestroyableEntity):
     """

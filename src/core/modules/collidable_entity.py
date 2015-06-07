@@ -1,7 +1,5 @@
 import math
 
-from src.core.modules.collision_manager import CollisionManager
-
 class CollidableEntity(object):
     """
         Describes entity with collision detection.
