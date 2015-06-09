@@ -2,6 +2,7 @@ import cocos
 
 from cocos.scenes.transitions import FadeTRTransition
 
+from src.core.modules.collision_manager import CollisionManager
 from src.scenes.main_menu_scene import MainMenuScene
 from src.scenes.win_scene import WinScene
 from src.scenes.loose_scene import LooseScene
@@ -51,6 +52,7 @@ class GameManager(object):
             Preload levels
         """
 
+        CollisionManager.clear()
         cls.levels = [level() for level in cls.level_classes]
 
     @classmethod
@@ -87,7 +89,6 @@ class GameManager(object):
         cls.load_levels()
         cls.current_level = 1
         level = cls.levels[cls.current_level]
-        print("restart", level)
         cocos.director.director.run(level)
 
     @classmethod

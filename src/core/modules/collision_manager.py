@@ -6,6 +6,14 @@ class CollisionManager(object):
     entities = []
 
     @classmethod
+    def clear(cls):
+        """
+            Resets collisions
+        """
+
+        cls.entities = []
+
+    @classmethod
     def register(cls, entity):
         """
             Add entity to be handled by collision manager.
