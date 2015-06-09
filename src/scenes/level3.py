@@ -12,7 +12,8 @@ class Level3(BaseScene):
         window_width, window_height = Sprite.window_size()
 
         boss = SimpleBoss()
-        boss.health = 1500
+        boss.health = 5000
+        boss.missle_damage = 50
         boss.set_position(window_width + 50, window_height / 2)
 
         wave1 = [boss]

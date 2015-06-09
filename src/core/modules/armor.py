@@ -15,6 +15,11 @@ class Armor(object):
             So, let's stay alive as much as we can to save our Master!
         """
 
-        delta = min(self.health, damage) * self.absorb_coeff
-        self.health = int(self.health - delta)
-        return 1.0 - delta
+        dealt_damage = damage
+
+        if self.health > 0:
+            delta = min(self.health, damage) * self.absorb_coeff
+            self.health = int(self.health - delta)
+            dealt_damage = (1.0 - self.absorb_coeff) * damage
+
+        return dealt_damage
