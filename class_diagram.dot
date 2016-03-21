@@ -1,0 +1,121 @@
+digraph G {
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+
+        node [
+                fontname = "Bitstream Vera Sans"
+                fontsize = 8
+                shape = "record"
+        ]
+
+        edge [
+                fontname = "Bitstream Vera Sans"
+                fontsize = 8
+        ]
+
+        Sprite [
+                label = "{Sprite|- image|+ draw()}"
+        ]
+
+        CollidableSprite [
+                label = "{CollidableSprite|- radius|+ onCollide()}"
+        ]
+
+        ParallaxLayer [
+                label = "{ParallaxLayer|- dx\l- sprite1\l- sprite2|+ draw()}"
+        ]
+
+        BackgroundLayer [
+                label = "{BackgroundLayer||}"
+        ]
+
+        Ship [
+                label = "{Ship|- health\l- armor\l- power|+ shoot()}"
+        ]
+
+        Player [
+                label = "{Player||+ move()\l+ shoot()}"
+        ]
+
+        Enemy [
+                label = "{Enemy|- bonus|+ move()\l+ shoot()}"
+        ]
+
+        Boss [
+                label = "{Boss||}"
+        ]
+
+        Bonus [
+                label = "{Bonus||+ apply()}"
+        ]
+
+        Health [
+                label = "{Health||}"
+        ]
+
+        Armor [
+                label = "{Armor||}"
+        ]
+
+        Level [
+                label = "{Level|- player\l- enemies\l- background|+ draw()}"
+        ]
+
+        edge [
+                arrowhead = "empty"
+        ]
+
+        BackgroundLayer -> ParallaxLayer
+        CollidableSprite -> Sprite
+        Ship -> CollidableSprite
+        Bonus -> CollidableSprite
+
+        Player -> Ship
+        Enemy -> Ship
+
+        Boss -> Enemy
+
+        Health -> Bonus
+        Armor -> Bonus
+
+        edge [
+                arrowhead = "vee"
+        ]
+
+        Level -> BackgroundLayer
+
+        edge [
+                headlabel = "1"
+                taillabel = "2"
+        ]
+
+        ParallaxLayer -> Sprite
+
+        edge [
+                headlabel = "1"
+                taillabel = "1"
+        ]
+
+        Level -> Player
+
+        edge [
+                headlabel = "1"
+                taillabel = "0..1"
+        ]
+
+        Level -> Boss
+
+        edge [
+                headlabel = "1"
+                taillabel = "1..*"
+        ]
+
+        Level -> Enemy
+
+        edge [
+                headlabel = "1"
+                taillabel = "0..*"
+        ]
+
+        Enemy -> Bonus
+}
