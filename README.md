@@ -1,5 +1,7 @@
 # Side Scrolling Shooter
 
+![Screenshot](/../master/python-shooter-screenshot.png?raw=true)
+
 ## Zadanie
 
 Side scrolling shooter - klasyczna strzelanka, gdzie lecimy statkiem/innym obiektem cały czas w prawo i walczymy z nadlatującymi wrogami. Gra powinna zawierać kilka plansz, różne rodzaję wrogów, broni/bonusów i conajmniej jedną walkę z bossem.

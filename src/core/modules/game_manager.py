@@ -23,7 +23,7 @@ class GameManager(object):
             Initializer
         """
 
-        cocos.director.director.init()
+        cocos.director.director.init(width = 800, height = 640, fullscreen = False)
 
         cls.level_classes = []
         cls.level_classes.append(MainMenuScene)
